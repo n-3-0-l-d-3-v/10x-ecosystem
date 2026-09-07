@@ -79,7 +79,7 @@ agent/repo layer is solid.
 ---
 
 ## Phase 6 — Gauntlet Agents (depth first)
-**Status: 4 of 7 built. TARS, Wall-E, Vision remain.**
+**Status: 5 of 7 built. TARS, Vision remain.**
 
 Build order (matches dependency order, not the original doc's list order):
 1. ~~Friday~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `friday`. 445 tests passing.
@@ -87,10 +87,10 @@ Build order (matches dependency order, not the original doc's list order):
 3. ~~Alfred~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `alfred`. 558 Python + 28 JS tests passing.
 4. ~~Jarvis~~ — **done.** New repo `n-3-0-l-d-3-v/jarvis`, 79 tests passing. Real MCP client (one standard client works for all three — Ultron's hand-rolled server turned out to speak the actual MCP wire protocol, no second dialect needed), tier engine, keyword-based intent classifier (v1 placeholder — see known gap below), `jarvis health`/`ask`/`route`/`daily` CLI. Verified live: `jarvis health` gets real, non-mocked healthy status from all three siblings.
    - **Known gap (tracked, not blocking):** the v1 keyword classifier misses phrasings like "explain hash maps" (no keyword hit → silently defaults to Friday instead of Alfred). Needs either broader keyword coverage or the Phase 5 local-model classifier to fix properly.
-5. Wall-E (health reports) — next up. Low complexity, high value: all four agents now expose a health check, so this is mostly a poll-and-report loop over things that already exist.
-6. TARS, Vision — net-new, build once Wall-E is done.
+5. ~~Wall-E~~ — **done.** New repo `n-3-0-l-d-3-v/wall-e`, 35 tests passing. Aggregates all 4 agents' health (shells out to `jarvis health`, real not mocked), audits Jarvis's dispatch log for privacy-tier violations, checks all 4 `agent.yaml` files for contract compliance, checks disk/git hygiene across all 4 sibling repos, writes a weekly report to `vault/Wall-E/`. Verified live: 4/4 healthy, all 4 contracts compliant, all 4 repos clean. Power/thermal/scheduling deferred — no Linux target yet, `wall-e report` is manual for now.
+6. TARS, Vision — net-new, remaining.
 
-**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred/Jarvis all meet this now, individually and wired together — Jarvis routing to real sibling agents over MCP is verified, not just unit-tested.
+**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred/Jarvis/Wall-E all meet this now, individually and wired together — Jarvis routing to real sibling agents over MCP is verified, and Wall-E polling all of them (including Jarvis itself) is verified, not just unit-tested.
 
 ---
 

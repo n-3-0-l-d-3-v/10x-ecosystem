@@ -32,7 +32,8 @@ Done:
 - [ultron](https://github.com/n-3-0-l-d-3-v/ultron) (formerly yugen/aether-platform)
 - [alfred](https://github.com/n-3-0-l-d-3-v/alfred) (formerly LeetLearn)
 - [jarvis](https://github.com/n-3-0-l-d-3-v/jarvis) (net-new orchestrator — routes to the three above over MCP)
+- [wall-e](https://github.com/n-3-0-l-d-3-v/wall-e) (net-new — polls all four agents, audits privacy compliance, weekly reports)
 - `devNote` (private) — Friday's vault store, pending Phase 2 merge decision
 
-New repos (TARS, Wall-E, Vision) get created and linked here as each is built, per
+New repos (TARS, Vision) get created and linked here as each is built, per
 `docs/phases/README.md` Phase 6 order.
