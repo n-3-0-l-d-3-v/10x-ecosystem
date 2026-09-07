@@ -79,18 +79,20 @@ agent/repo layer is solid.
 ---
 
 ## Phase 6 — Gauntlet Agents (depth first)
-**Status: 5 of 7 built. TARS, Vision remain.**
+**Status: DONE. All 7 agents built, tested, and pushed.**
 
-Build order (matches dependency order, not the original doc's list order):
-1. ~~Friday~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `friday`. 445 tests passing.
-2. ~~Ultron~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `ultron`. 385 tests passing.
-3. ~~Alfred~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `alfred`. 558 Python + 28 JS tests passing.
-4. ~~Jarvis~~ — **done.** New repo `n-3-0-l-d-3-v/jarvis`, 79 tests passing. Real MCP client (one standard client works for all three — Ultron's hand-rolled server turned out to speak the actual MCP wire protocol, no second dialect needed), tier engine, keyword-based intent classifier (v1 placeholder — see known gap below), `jarvis health`/`ask`/`route`/`daily` CLI. Verified live: `jarvis health` gets real, non-mocked healthy status from all three siblings.
+1. ~~Friday~~ — converted from jarvisOS, merged, pushed, GitHub repo renamed. 445 tests.
+2. ~~Ultron~~ — converted from yugen, merged, pushed, GitHub repo renamed. 385 tests.
+3. ~~Alfred~~ — converted from LeetLearn, merged, pushed, GitHub repo renamed. 558 Python + 28 JS tests.
+4. ~~Jarvis~~ — orchestrator, new repo. 79 tests. Real MCP client for all three siblings (Ultron's hand-rolled server speaks the actual MCP wire protocol — no second dialect needed), the tier engine, a v1 keyword-based intent classifier.
    - **Known gap (tracked, not blocking):** the v1 keyword classifier misses phrasings like "explain hash maps" (no keyword hit → silently defaults to Friday instead of Alfred). Needs either broader keyword coverage or the Phase 5 local-model classifier to fix properly.
-5. ~~Wall-E~~ — **done.** New repo `n-3-0-l-d-3-v/wall-e`, 35 tests passing. Aggregates all 4 agents' health (shells out to `jarvis health`, real not mocked), audits Jarvis's dispatch log for privacy-tier violations, checks all 4 `agent.yaml` files for contract compliance, checks disk/git hygiene across all 4 sibling repos, writes a weekly report to `vault/Wall-E/`. Verified live: 4/4 healthy, all 4 contracts compliant, all 4 repos clean. Power/thermal/scheduling deferred — no Linux target yet, `wall-e report` is manual for now.
-6. TARS, Vision — net-new, remaining.
+5. ~~Wall-E~~ — system health, new repo. 35 tests. Aggregates all agents' health, audits Jarvis's dispatch log for privacy-tier violations, checks `agent.yaml` contract compliance, writes weekly vault reports. Power/thermal/scheduling deferred — no Linux target yet, `wall-e report` is manual for now.
+6. ~~TARS~~ — code/build/test/scaffolding, new repo. 56 tests. Hard-enforced allowed-roots safety boundary (verified live to fail closed). Deliberately no `tars push`.
+7. ~~Vision~~ — creative/ideation, new repo. 68 tests. Project scaffolding, real `.excalidraw` starter files, asset cataloging, vault MOC with working `--private` routing. No DAW/Krita/Blender automation — that software isn't installed yet (Phase 3 deferred).
 
-**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred/Jarvis/Wall-E all meet this now, individually and wired together — Jarvis routing to real sibling agents over MCP is verified, and Wall-E polling all of them (including Jarvis itself) is verified, not just unit-tested.
+**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. All 7 meet this individually. Jarvis routing to real sibling agents over MCP is verified, and Wall-E polling all of them (including Jarvis itself) is verified, not just unit-tested — the ecosystem is wired together, not just seven parallel CLIs.
+
+**What Phase 6 does NOT yet mean:** TARS/Vision aren't yet registered in Jarvis's `agents.yaml` (Jarvis currently only knows about Friday/Ultron/Alfred) — routing `jarvis ask` to TARS or Vision needs that registry updated. Small follow-up, not done automatically by building the agents themselves.
 
 ---
 
