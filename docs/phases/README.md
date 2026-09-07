@@ -56,14 +56,14 @@ agent/repo layer is solid.
 ---
 
 ## Phase 4 — Dev + Security + Systems Toolchain
-**Status: not started. TARS and Ultron specs exist; implementation pending.**
+**Status: Ultron done. TARS not started.**
 
 - [ ] Language toolchain list finalized (Rust/Go/Python/C/C++/JS-TS/Zig/Java as needed)
-- [ ] Ultron wraps `yugen` — build the thin wrapper (sandbox, vault writes, human review gate)
+- [x] ~~Ultron wraps `yugen`~~ — done, full conversion (not a wrapper): sandboxed network lockdown, vault writes with human review gate, `agent.yaml`, health check. See `../repo-map.md`.
 - [ ] TARS scaffolding tool built (replaces the `alfredOS` throwaway `dev` script)
 - [ ] Container runtime decision (Podman preferred per original plan)
 
-**Success criteria:** Ultron produces a real evidence-cited finding via yugen end to end; TARS scaffolds a real project.
+**Success criteria:** ~~Ultron produces a real evidence-cited finding via yugen end to end~~ — met; TARS scaffolds a real project (pending).
 
 ---
 
@@ -79,17 +79,18 @@ agent/repo layer is solid.
 ---
 
 ## Phase 6 — Gauntlet Agents (depth first)
-**Status: 3 of 7 converted and merged. Jarvis, TARS, Wall-E, Vision remain.**
+**Status: 4 of 7 built. TARS, Wall-E, Vision remain.**
 
 Build order (matches dependency order, not the original doc's list order):
 1. ~~Friday~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `friday`. 445 tests passing.
 2. ~~Ultron~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `ultron`. 385 tests passing.
 3. ~~Alfred~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `alfred`. 558 Python + 28 JS tests passing.
-4. **Jarvis** (orchestrator + router) — next up. Nothing wires the three converted agents together yet; each is independently usable but not yet callable from one place. Must be an MCP client able to speak to Ultron's hand-rolled MCP transport and Friday/Alfred's standard `mcp`-package transport.
-5. Wall-E (health reports) — low complexity, high value: all three converted agents already expose `--health`, so this is mostly a poll-and-report loop over things that already exist.
-6. TARS, Vision — net-new, build once Jarvis proves the orchestration pattern.
+4. ~~Jarvis~~ — **done.** New repo `n-3-0-l-d-3-v/jarvis`, 79 tests passing. Real MCP client (one standard client works for all three — Ultron's hand-rolled server turned out to speak the actual MCP wire protocol, no second dialect needed), tier engine, keyword-based intent classifier (v1 placeholder — see known gap below), `jarvis health`/`ask`/`route`/`daily` CLI. Verified live: `jarvis health` gets real, non-mocked healthy status from all three siblings.
+   - **Known gap (tracked, not blocking):** the v1 keyword classifier misses phrasings like "explain hash maps" (no keyword hit → silently defaults to Friday instead of Alfred). Needs either broader keyword coverage or the Phase 5 local-model classifier to fix properly.
+5. Wall-E (health reports) — next up. Low complexity, high value: all four agents now expose a health check, so this is mostly a poll-and-report loop over things that already exist.
+6. TARS, Vision — net-new, build once Wall-E is done.
 
-**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred meet this individually already (each runs standalone); the remaining gap before "ecosystem" is real is Jarvis actually routing between them.
+**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred/Jarvis all meet this now, individually and wired together — Jarvis routing to real sibling agents over MCP is verified, not just unit-tested.
 
 ---
 

@@ -6,8 +6,8 @@ exactly which repo is which and what's already built vs. net-new.
 
 ## Start here
 
-- [`docs/repo-map.md`](docs/repo-map.md) — which repos are converted (Friday, Ultron,
-  Alfred) vs. net-new, and where each one lives.
+- [`docs/repo-map.md`](docs/repo-map.md) — which repos are converted/built (Friday,
+  Ultron, Alfred, Jarvis) vs. net-new, and where each one lives.
 - [`docs/omniroute-privacy-spec.md`](docs/omniroute-privacy-spec.md) — the
   privacy/provider-routing rule: private tokens for personal work, free-tier
   OmniRoute pool for generic work, local-only fail-closed for sensitive content.
@@ -27,11 +27,12 @@ minimums. Sensitive content never leaves the machine — see the privacy spec.
 
 ## Related repos (isolated, each with its own commits/pushes)
 
-Converted, done:
+Done:
 - [friday](https://github.com/n-3-0-l-d-3-v/friday) (formerly jarvisOS)
 - [ultron](https://github.com/n-3-0-l-d-3-v/ultron) (formerly yugen/aether-platform)
 - [alfred](https://github.com/n-3-0-l-d-3-v/alfred) (formerly LeetLearn)
+- [jarvis](https://github.com/n-3-0-l-d-3-v/jarvis) (net-new orchestrator — routes to the three above over MCP)
 - `devNote` (private) — Friday's vault store, pending Phase 2 merge decision
 
-New repos (Jarvis orchestrator, TARS, Wall-E, Vision) get created and linked here
-as each is built, per `docs/phases/README.md` Phase 6 order.
+New repos (TARS, Wall-E, Vision) get created and linked here as each is built, per
+`docs/phases/README.md` Phase 6 order.
