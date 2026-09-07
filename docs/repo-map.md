@@ -19,6 +19,7 @@ Nothing is duplicated between them.
 | `jarvisOS` | github.com/n-3-0-l-d-3-v/jarvisOS (public) | 7.7k lines, 192 tests, MCP server, CLI (`jar`). Captures/classifies/stores notes via Groq → Gemini → offline keyword fallback. | **Friday** — knowledge capture, docs, writing, note synthesis. Outward rename only (README/CLI banner say "Friday"); code, tests, and repo name can stay as-is unless you want the GitHub repo itself renamed too (separate decision, ask before doing it). |
 | `devNote` | github.com/n-3-0-l-d-3-v/devNote (private) | The actual vault jarvisOS/Friday writes to — 387 notes on disk today. | Friday's memory store. Long-term this either becomes (or is absorbed by) the Obsidian vault in Phase 2, so Friday and Obsidian aren't two separate brains. |
 | `yugen` | github.com/n-3-0-l-d-3-v/yugen (public, formerly aether-platform) | Evidence-first binary/firmware analysis. Ghidra headless + binwalk. Deterministic claim graph, no LLM in the core loop. Phase 0-2 shipped, 350 tests, ADRs. | **Ultron**'s backend engine. Ultron is a thin wrapper agent (sandboxed, personalized prompts, vault-aware) that shells out to `yugen` for the actual analysis. Yugen stays its own repo, its own release cadence, its own test suite — never merged in. |
+| `LeetLearn` | github.com/n-3-0-l-d-3-v/LeetLearn (public) | 351 tests (323 Python + 28 JS). FastAPI backend + Chrome/Firefox extension. Socratic hint ladder + AC gate (structurally can't leak solutions pre-pass) + code-aware review + interview mode. Zero API key required. Own roadmap (Phase 6) already lists system-design mentor + second judge + VS Code extension. | **Alfred** — learning/upskilling mentor. Same pattern as jarvisOS → Friday: outward rename, keep the repo/code, extend scope per its own existing Phase 6 roadmap rather than rewriting. Ecosystem adds vault integration (reads Friday's notes before explaining, writes streaks back) on top. |
 
 ## Net-new — nothing built yet
 
@@ -26,7 +27,6 @@ Nothing is duplicated between them.
 |---|---|---|
 | **Jarvis** | Orchestrator / router / chief of staff | Needs OmniRoute-style intent classification + privacy-aware routing (see `omniroute-privacy-spec.md`). This is the piece that makes "Gauntlet" feel like one system instead of 7 CLIs. |
 | **TARS** | Code gen / build / test / refactor / scaffolding | Some prior art in `alfredOS`'s throwaway `dev` script (folder-copy + git init) — ergonomics worth keeping, code gets rewritten. |
-| **Alfred** | Learning tutor / spaced repetition / concept explainer | Net-new. Reads Friday's vault for what you've already learned before explaining something, so it doesn't re-teach what you know. |
 | **Wall-E** | System health / cleanup / power profiles / weekly report | Net-new. This is the one agent that's mostly shell scripts + `systemd`/cron timers, not an LLM loop. |
 | **Vision** | All creative: music, design, visual, video, photography, portfolio, ideation | Net-new. Owns Excalidraw, DAW project scaffolding, portfolio-asset generation. |
 

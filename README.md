@@ -29,7 +29,8 @@ minimums. Sensitive content never leaves the machine — see the privacy spec.
 
 - [jarvisOS](https://github.com/n-3-0-l-d-3-v/jarvisOS) — Friday's code
 - [yugen](https://github.com/n-3-0-l-d-3-v/yugen) — Ultron's backend engine
+- [LeetLearn](https://github.com/n-3-0-l-d-3-v/LeetLearn) — Alfred's code
 - `devNote` (private) — Friday's vault store, pending Phase 2 merge decision
 
-New repos (Jarvis orchestrator, TARS, Alfred, Wall-E, Vision) get created and
-linked here as each is built, per `docs/phases/README.md` Phase 6 order.
+New repos (Jarvis orchestrator, TARS, Wall-E, Vision) get created and linked here
+as each is built, per `docs/phases/README.md` Phase 6 order.

@@ -85,8 +85,9 @@ Build order (matches dependency order, not the original doc's list order):
 1. Jarvis (orchestrator + router) — nothing else works without this
 2. Friday (rename/wrap existing jarvisOS) — fastest win, already 90% done
 3. Ultron (wrap yugen) — second-fastest win, already 90% done
-4. Wall-E (health reports) — low complexity, high value for auditing the privacy rule
-5. TARS, Alfred, Vision — net-new, build once the above prove the pattern
+4. Alfred (rename/extend existing LeetLearn) — third near-free win, already 90% done, own roadmap already points at the scope expansion this ecosystem wants
+5. Wall-E (health reports) — low complexity, high value for auditing the privacy rule
+6. TARS, Vision — net-new, build once the above prove the pattern
 
 **Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier.
 
