@@ -79,17 +79,17 @@ agent/repo layer is solid.
 ---
 
 ## Phase 6 — Gauntlet Agents (depth first)
-**Status: not started.**
+**Status: 3 of 7 converted and merged. Jarvis, TARS, Wall-E, Vision remain.**
 
 Build order (matches dependency order, not the original doc's list order):
-1. Jarvis (orchestrator + router) — nothing else works without this
-2. Friday (rename/wrap existing jarvisOS) — fastest win, already 90% done
-3. Ultron (wrap yugen) — second-fastest win, already 90% done
-4. Alfred (rename/extend existing LeetLearn) — third near-free win, already 90% done, own roadmap already points at the scope expansion this ecosystem wants
-5. Wall-E (health reports) — low complexity, high value for auditing the privacy rule
-6. TARS, Vision — net-new, build once the above prove the pattern
+1. ~~Friday~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `friday`. 445 tests passing.
+2. ~~Ultron~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `ultron`. 385 tests passing.
+3. ~~Alfred~~ — **done.** Converted, merged, pushed, GitHub repo renamed to `alfred`. 558 Python + 28 JS tests passing.
+4. **Jarvis** (orchestrator + router) — next up. Nothing wires the three converted agents together yet; each is independently usable but not yet callable from one place. Must be an MCP client able to speak to Ultron's hand-rolled MCP transport and Friday/Alfred's standard `mcp`-package transport.
+5. Wall-E (health reports) — low complexity, high value: all three converted agents already expose `--health`, so this is mostly a poll-and-report loop over things that already exist.
+6. TARS, Vision — net-new, build once Jarvis proves the orchestration pattern.
 
-**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier.
+**Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. Friday/Ultron/Alfred meet this individually already (each runs standalone); the remaining gap before "ecosystem" is real is Jarvis actually routing between them.
 
 ---
 

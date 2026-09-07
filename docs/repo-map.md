@@ -12,22 +12,26 @@ Every isolated repo gets its own commits and its own pushes. This repo gets its 
 commits and pushes for ecosystem-level changes (docs, bootstrap, vault template).
 Nothing is duplicated between them.
 
-## Existing, working — reuse, don't rewrite
+## Converted — done, merged, pushed, renamed
 
-| Repo | GitHub | State | Becomes |
+| Agent | GitHub | Local | State |
 |---|---|---|---|
-| `jarvisOS` | github.com/n-3-0-l-d-3-v/jarvisOS (public) | 7.7k lines, 192 tests, MCP server, CLI (`jar`). Captures/classifies/stores notes via Groq → Gemini → offline keyword fallback. | **Friday**, full conversion. Package/CLI/docs renamed jarvisOS → Friday throughout. Existing capture/classify/store/push/link pipeline preserved as-is. Ecosystem requirements merged in: `agent.yaml`, fix the catalogue-drift bug (self-healing index instead of hand-maintained), `personal-token`-tier enforcement, health-check. GitHub repo rename itself is a separate, later action — done only after the code conversion is reviewed. |
-| `devNote` | github.com/n-3-0-l-d-3-v/devNote (private) | The actual vault jarvisOS/Friday writes to — 387 notes on disk today. | Friday's memory store. Long-term this either becomes (or is absorbed by) the Obsidian vault in Phase 2, so Friday and Obsidian aren't two separate brains. |
-| `yugen` | github.com/n-3-0-l-d-3-v/yugen (public, formerly aether-platform) | Evidence-first binary/firmware analysis. Ghidra headless + binwalk. Deterministic claim graph, no LLM in the core loop. Phase 0-2 shipped, 350 tests, ADRs. | **Ultron**, full conversion. Package/CLI/docs renamed yugen → Ultron throughout. All of yugen's existing requirements (evidence-graph discipline, claim schema, deterministic core, ADRs) preserved as Ultron's requirements. Ecosystem requirements (`agent.yaml` manifest, MCP server, sandboxed execution, vault-write with human review gate, `private`-tier enforcement, health-check) merged in as real missing functionality, not a wrapper layer. One repo, one identity, standalone-usable and ecosystem-member at once. |
-| `LeetLearn` | github.com/n-3-0-l-d-3-v/LeetLearn (public) | 351 tests (323 Python + 28 JS). FastAPI backend + Chrome/Firefox extension. Socratic hint ladder + AC gate (structurally can't leak solutions pre-pass) + code-aware review + interview mode. Zero API key required. Own roadmap (Phase 6) already lists system-design mentor + second judge + VS Code extension. | **Alfred**, full conversion. Package/CLI/docs renamed LeetLearn → Alfred throughout. All existing requirements (AC gate, five-language static analysis, personas, cost fence) preserved. Ecosystem requirements (`agent.yaml`, MCP server, vault read/write, `personal-token`-tier enforcement, health-check) merged in as real missing functionality. |
+| **Friday** | github.com/n-3-0-l-d-3-v/friday (public, formerly jarvisOS) | `Desktop/Neil/friday/` | 445 tests passing. Full conversion complete: package/CLI/docs renamed throughout, capture/classify/store/push/link pipeline preserved, catalogue-drift bug fixed (self-healing reindex wired into `friday doctor`/`friday daily`), `agent.yaml`, `friday --health`, `personal-token`-tier guard. Old `JARVIS_*` env vars still read with a deprecation warning. |
+| **Ultron** | github.com/n-3-0-l-d-3-v/ultron (public, formerly yugen/aether-platform) | `Desktop/Neil/ultron/` | 385 tests passing. Full conversion complete: package/CLI/docs renamed throughout, evidence-graph discipline and all ADRs (0001-0010) preserved as history, new ADR 0011 documents the rename. `agent.yaml`, `ultron --health`, `ultron vault write/list/approve` (pending→approved human review gate), hard network lockdown enforcing the `private` tier (`RemoteHostRefused` unless explicitly overridden). Kept its own hand-rolled MCP transport per its existing zero-runtime-dependency ADR rather than adopting the `mcp` PyPI package. |
+| **Alfred** | github.com/n-3-0-l-d-3-v/alfred (public, formerly LeetLearn) | `Desktop/Neil/alfred/` | 558 Python + 28 JS tests passing. Full conversion complete: package/CLI/extension/docs renamed throughout, AC gate and all existing pedagogy features preserved, `agent.yaml`, health check, MCP server (`get_hint`/`submit_for_ac_gate`/`get_review`/`get_interview_questions`), optional vault integration (`VAULT_PATH` env var — reads Friday's notes before explaining, writes progress notes back; true no-op when unset). |
+
+`devNote` (private, github.com/n-3-0-l-d-3-v/devNote) — the vault Friday writes to,
+387 notes on disk. Untouched by the conversion. Long-term this either becomes or is
+absorbed by the Obsidian vault in Phase 2, so Friday and Obsidian aren't two
+separate brains — still an open decision.
 
 ## Net-new — nothing built yet
 
 | Agent | Role | Notes |
 |---|---|---|
-| **Jarvis** | Orchestrator / router / chief of staff | Needs OmniRoute-style intent classification + privacy-aware routing (see `omniroute-privacy-spec.md`). This is the piece that makes "Gauntlet" feel like one system instead of 7 CLIs. |
+| **Jarvis** | Orchestrator / router / chief of staff | Needs OmniRoute-style intent classification + privacy-aware routing (see `omniroute-privacy-spec.md`). This is the piece that makes "Gauntlet" feel like one system instead of running Friday/Ultron/Alfred as separate CLIs — and it needs to speak both Ultron's hand-rolled MCP transport and Friday/Alfred's standard `mcp` package as an MCP client. |
 | **TARS** | Code gen / build / test / refactor / scaffolding | Some prior art in `alfredOS`'s throwaway `dev` script (folder-copy + git init) — ergonomics worth keeping, code gets rewritten. |
-| **Wall-E** | System health / cleanup / power profiles / weekly report | Net-new. This is the one agent that's mostly shell scripts + `systemd`/cron timers, not an LLM loop. |
+| **Wall-E** | System health / cleanup / power profiles / weekly report | Net-new. This is the one agent that's mostly shell scripts + `systemd`/cron timers, not an LLM loop. Will poll all three converted agents' `--health` commands. |
 | **Vision** | All creative: music, design, visual, video, photography, portfolio, ideation | Net-new. Owns Excalidraw, DAW project scaffolding, portfolio-asset generation. |
 
 ## `alfredOS` folder itself
