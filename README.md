@@ -49,14 +49,25 @@ Each repo is standalone-installable and independently useful on its own. Jarvis'
 
 ## What's next
 
-Phase 6 (all 7 agents) is done. Remaining open items, in rough priority order:
-1. Jarvis's intent classifier is v1 keyword-matching — misses phrasings with no
-   keyword hit (see `docs/repo-map.md`'s Jarvis entry).
-2. Vision has no MCP server yet — health-checkable, not yet dispatchable through
+Phase 6 (all 7 agents) and Phase 5's core (local Ollama) are both done. Remaining
+open items, in rough priority order:
+1. Vision has no MCP server yet — health-checkable, not yet dispatchable through
    `jarvis ask`.
+2. Real OmniRoute cloud-fallback (Groq/OpenRouter free tier) isn't wired in — no
+   shared free-tier credentials configured yet. `work`/`public`-tier requests are
+   local-only (`ollama-local`) until that's added.
 3. Phase 2 (Obsidian vault) — every agent already writes to its own local
    `vault/<Agent>/` folder; the real shared vault and the `devNote`-vs-vault
    merge decision haven't happened yet.
 4. Phases 1/3 (Linux desktop, Zen browser) — still deliberately on hold.
-5. Phase 5 (local Ollama models) — would upgrade Jarvis's classifier and unlock
-   real OmniRoute cloud-fallback routing, currently a no-op tier-logging layer.
+
+## Local AI (Phase 5 — done)
+
+Ollama is installed and running (`127.0.0.1:11434`), sized to this machine's
+actual hardware (Intel i5-11400H, 32GB RAM, RTX 3050 Laptop ~4GB VRAM):
+`qwen2.5:3b` (routing/classification, fits fully in VRAM) and `qwen2.5:7b`
+(larger, for future heavier local tasks). Jarvis's intent classifier now uses
+the local model instead of the old v1 keyword table — verified live to fix the
+documented "explain hash maps" misroute and to correctly route to every one of
+the 5 health-checkable agents, with an automatic, tested fallback to the
+keyword classifier if Ollama is ever down or the model isn't pulled.

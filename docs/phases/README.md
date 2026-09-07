@@ -16,7 +16,7 @@ Each phase below is a ticket: **Goal**, **Tasks**, **Success criteria**, **Statu
 - [x] Hardware/software inventory of what already exists (jarvisOS, yugen, alfredOS docs)
 - [x] Agent roster finalized: Jarvis/Friday/TARS/Ultron/Alfred/Wall-E/Vision, mapped to existing code where it exists
 - [x] Repo strategy: isolated repos per agent + umbrella ecosystem repo
-- [ ] Hardware minimums documented (CPU/RAM/GPU/VRAM) — **needs your input**
+- [x] Hardware inventoried (this machine): Intel i5-11400H, 32GB RAM, RTX 3050 Laptop (~4GB VRAM). Used directly in Phase 5's model sizing.
 - [ ] Vault structure sketch finalized (Phase 2 will build it, sketch happens here)
 
 **Success criteria:** every agent has a spec file, every existing asset is mapped, no ambiguity left before code starts.
@@ -68,13 +68,16 @@ agent/repo layer is solid.
 ---
 
 ## Phase 5 — Local AI Foundation
-**Status: not started. Blocked on hardware inventory (Phase 0 open item).**
+**Status: core done.** Hardware inventory: Intel i5-11400H, 32GB RAM, RTX 3050 Laptop (~4GB VRAM) — sized model selection to this.
 
-- [ ] Ollama install + model selection sized to actual hardware
-- [ ] OmniRoute provider config (`providers.yaml`) implementing `../omniroute-privacy-spec.md`
-- [ ] Basic chat + vault integration (proves Jarvis → Friday round-trip works)
+- [x] Ollama installed via winget, running as a local service (`127.0.0.1:11434`).
+- [x] Models pulled: `qwen2.5:3b` (routing/classification — fits fully in 4GB VRAM), `qwen2.5:7b` (larger, for future heavier local tasks — may partially offload to system RAM on this GPU, that's fine, just slower).
+- [x] `providers.yaml` + `providers.py` in Jarvis — the OmniRoute eligibility table, honest about what's real (`ollama-local`, fully wired) vs. aspirational (`groq-free-tier`/`openrouter-free-tier` — no shared credentials configured yet, tracked not faked).
+- [x] Jarvis's v1 keyword classifier replaced by a local-model classifier (`jarvis/local_classifier.py`), built from the live agent registry rather than a hardcoded keyword table — fixes both the "explain hash maps" gap and the fact that the keyword classifier never knew about TARS/Vision. Falls back to the keyword classifier silently on any failure (Ollama down, model not pulled, bad response) — verified both paths live.
+- [ ] Real OmniRoute cloud-fallback routing (Groq/OpenRouter free tier) — not done. Needs the user to supply free-tier API keys first; `work`/`public` tier requests are local-only (`ollama-local`) until then.
+- [ ] Friday/Alfred's own provider calls aren't centrally routed through Jarvis — each already had its own working, correctly tier-guaranteed provider logic before Jarvis existed. Retrofitting that through a central router is a real rewrite of working code, not done as part of this phase; `providers.yaml` documents this as the honest current state, not a gap to silently paper over.
 
-**Success criteria:** a request routes through Jarvis, gets a correct sensitivity tier, and reaches the right provider — verified by the Wall-E audit log, not just "it seemed to work."
+**Success criteria:** ~~a request routes through Jarvis, gets a correct sensitivity tier, and reaches the right provider~~ — met for the local path (verified live: `jarvis route` correctly tier-gates and selects an agent using the real local model, not mocked). Not yet met for the cloud-fallback path, which doesn't exist yet by design (no credentials).
 
 ---
 
