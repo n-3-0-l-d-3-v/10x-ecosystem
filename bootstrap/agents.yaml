@@ -1,0 +1,11 @@
+# Manifest of every ecosystem agent: where to clone it and how to install it.
+root_default: "~/gauntlet"
+agents:
+  - {name: friday, repo: n-3-0-l-d-3-v/friday, branch: main, install: "pip install -e .", health: "friday --health"}
+  - {name: ultron, repo: n-3-0-l-d-3-v/ultron, branch: main, install: "pip install -e .", health: "ultron --health"}
+  - {name: alfred, repo: n-3-0-l-d-3-v/alfred, branch: main, install: "pip install -r requirements.txt", workdir: apps/api, health: "python -m alfred --health"}
+  - {name: jarvis, repo: n-3-0-l-d-3-v/jarvis, branch: main, install: "pip install -e .", health: "jarvis --health"}
+  - {name: wall-e, repo: n-3-0-l-d-3-v/wall-e, branch: main, install: "pip install -e .", health: "wall-e --health"}
+  - {name: tars, repo: n-3-0-l-d-3-v/tars, branch: main, install: "pip install -e .", health: "tars --health"}
+  - {name: vision, repo: n-3-0-l-d-3-v/vision, branch: main, install: "pip install -e .", health: "vision --health"}
+models: ["qwen2.5:3b", "qwen2.5:7b"]
