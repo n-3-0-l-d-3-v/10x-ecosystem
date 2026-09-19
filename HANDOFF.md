@@ -18,5 +18,8 @@
 - Friday tests are slow (~2 min); run in background. Ultron test_probe_* needs JAVA/GHIDRA env consistent.
 - Old repos folder names renamed (reverse engineer→ultron, jarvisOS→friday, leetLearn→alfred).
 
+## Done since last handoff
+Vision MCP server (Jarvis dispatches to it); Ghidra 11.4.3 + Ultron real analysis verified; shared vault=devNote (agents/<Name>/); bootstrap script; Wall-E `schedule` (weekly task installed: WallE-WeeklyReport, Sun 09:00); Phase 2 LifeOS template (vault/Home.md, System/Templates, plugin list) also copied into devNote (uncommitted there); `friday github [--readme]` stats + profile README.
+
 ## Queue (do in order)
-1. Wall-E scheduling via Windows Task Scheduler (weekly report). 2. Phase 2: Obsidian LifeOS template in vault/ (dashboard, daily/weekly, streaks, media notes). 3. Phase 7: GitHub profile/portfolio pipeline (Friday+Vision). 4. Jarvis: default tools for more agents, voice (whisper.cpp) foundation. 5. Cloud fallback needs user's free-tier keys (blocked on user). 6. Phases 1/3 (Linux, Zen) deferred by user.
+1. Jarvis: `jarvis daily` briefing that pulls Friday/Alfred/Wall-E vault data; default tools for more agents. 2. Phase 7 rest: LinkedIn/blog/portfolio draft pipeline (Friday+Vision), content-calendar notes (vault Socials/). 3. Voice foundation (whisper.cpp + Piper) as `jarvis listen`. 4. Phase 9: sandbox Ultron (Windows Sandbox/Docker), focus-mode script. 5. Cloud fallback: blocked on user's free-tier keys. 6. Phases 1/3 (Linux, Zen, creative apps) deferred by user; install-able-now creative apps (Krita, Blender, Ardour, OBS via winget) is a candidate.

@@ -111,3 +111,14 @@ agent/repo layer is solid.
 
 ## Phase 9 — Hardening, Performance, Continuous Loop
 **Status: not started.** Sandboxing (bubblewrap/firejail per-agent, especially Ultron), Focus Modes, Wall-E's weekly cadence running for real, update strategy that doesn't break things, computer-vision face-unlock-after-password layer if hardware supports it.
+
+
+---
+## Status update (2026-09-19)
+- Phase 2: LifeOS vault template built (`vault/`), shared vault = devNote, agents write to `agents/<Name>/`.
+- Phase 4: Ultron runs real Ghidra analysis (Ghidra 11.4.3; 12.x lacks Jython).
+- Phase 6: Vision MCP server done; all 7 agents dispatchable from Jarvis.
+- Phase 7: `friday github` stats + profile README; rest pending.
+- Phase 8: `bootstrap/bootstrap.py` one-command setup (verified live).
+- Phase 9: Wall-E weekly report scheduled via Task Scheduler.
+See HANDOFF.md for the live queue.
