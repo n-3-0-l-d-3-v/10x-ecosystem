@@ -30,5 +30,9 @@ Gotcha: this tool layer un-escapes backslashes in commands; in python edits use 
 ## Latest
 Alfred system-design mentor (`sd_list/sd_hint/sd_review` MCP tools; 6 scenarios; reveal gate). Ultron sandbox image verified. Wall-E now checks all 6 sibling repos; its Sunday task really ran (report in devNote/agents/Wall-E) and flagged: Friday `--health` ~9s (jarvis health timeout raised to 30s) and DISK ~9.5% free (models ~7GB + Docker image 1.8GB) - free space soon. All repos' tests are hermetic to the global VAULT_PATH.
 
+## Also done (queue items 2-4)
+`vision open <project> [--app] [--dry-run]` launches Audacity/OBS/etc by project type (verified dry-run). Friday `--health` probes providers in parallel, 5s cap. Wall-E report lists `Reason:` lines and flags low disk (<10% or <20GB); cleaned pip+Docker build cache (disk now ~92% used; user's Downloads is 18GB - user's call). Gemini key in Friday fails (`response.text` empty) - check key/quota.
+App installs: Obsidian, Zen, OBS, Audacity OK. Krita/Blender/Inkscape failed under UAC (machine-wide MSI cancelled); retrying with `--scope user` (log %TEMP%/install3.log).
+
 ## Queue (do in order)
-1. Retry winget installs one at a time (Krita errored; verify Blender/Inkscape/Audacity/OBS/Ardour). 2. `vision open <project>` launcher for installed apps. 3. Speed up Friday --health (parallel/shorter provider probes). 4. Wall-E disk-space warning threshold in report status. 5. Cloud fallback blocked on user's free-tier keys. 6. Phases 1/3 Linux/Zen config deferred by user.
+1. Confirm install3 results (Krita/Blender/Inkscape/Ardour); if a user-scope install fails, use portable zips. 2. Look into Friday's Gemini failure. 3. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 4. Phases 1/3 Linux/Zen config deferred by user. 5. New ideas: Alfred vault-aware explanations, Ultron eval suite in CI, bootstrap: add Ghidra/Ollama/JDK steps.
