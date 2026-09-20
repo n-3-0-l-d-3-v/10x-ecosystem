@@ -25,5 +25,7 @@ Vision MCP server (Jarvis dispatches to it); Ghidra 11.4.3 + Ultron real analysi
 `friday draft <platform> <note>` (local 7b, draft-only, thin-source guard + invented-number flag); `friday portfolio` (static page); `jarvis listen` (offline faster-whisper STT + SAPI TTS, verified round-trip); agent `description` fields in jarvis/agents.yaml drive routing; `jarvis daily` includes vault data; `ultron sandbox build|analyze` (network-less Docker; Dockerfile NOT yet built - Docker Desktop was still starting). App installs via winget: Obsidian+Zen done; Krita errored; Blender/OBS/Inkscape/Audacity/Ardour in queue (log: %TEMP%/install2.log).
 Gotcha: this tool layer un-escapes backslashes in commands; in python edits use chr(92) or avoid backslash literals.
 
+`jarvis do "<sentence>" [--dry-run]`: local qwen2.5:7b plans ONE tool call (validated against real MCP schema) then executes; verified live (TARS scaffold, Vision list, Friday capture). `wall-e focus on|off` (power saver + unload models, restores plan). Docker Desktop engine not reachable yet (may need user to accept first-run prompt).
+
 ## Queue (do in order)
 1. Build+test ultron sandbox image once Docker is up (`ultron sandbox build`, then analyze examples/firmware_agent.elf). 2. Retry failed winget installs (Krita) and wire Vision to launch apps (xdg-open equivalents: `vision open <project>`). 3. Phase 9: focus-mode script (stop Ollama/agents, power plan). 4. Alfred: system-design mentor (its own Phase 6). 5. Cloud fallback blocked on user's free-tier keys. 6. Phases 1/3 Linux/OS deferred by user.
