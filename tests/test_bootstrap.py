@@ -27,3 +27,10 @@ def test_alfred_installs_from_apps_api(tmp_path):
 def test_dry_run_touches_nothing(tmp_path, capsys):
     assert b.main(["--root", str(tmp_path / "x"), "--dry-run", "--skip-models"]) == 0
     assert not (tmp_path / "x").exists()
+
+
+def test_prereqs_report_shape():
+    import prereqs
+
+    s = prereqs.report()
+    assert {"git", "python", "ollama", "java", "docker", "ghidra"} <= set(s) and s["git"] and s["python"]
