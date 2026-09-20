@@ -21,5 +21,9 @@
 ## Done since last handoff
 Vision MCP server (Jarvis dispatches to it); Ghidra 11.4.3 + Ultron real analysis verified; shared vault=devNote (agents/<Name>/); bootstrap script; Wall-E `schedule` (weekly task installed: WallE-WeeklyReport, Sun 09:00); Phase 2 LifeOS template (vault/Home.md, System/Templates, plugin list) also copied into devNote (uncommitted there); `friday github [--readme]` stats + profile README.
 
+## Also done
+`friday draft <platform> <note>` (local 7b, draft-only, thin-source guard + invented-number flag); `friday portfolio` (static page); `jarvis listen` (offline faster-whisper STT + SAPI TTS, verified round-trip); agent `description` fields in jarvis/agents.yaml drive routing; `jarvis daily` includes vault data; `ultron sandbox build|analyze` (network-less Docker; Dockerfile NOT yet built - Docker Desktop was still starting). App installs via winget: Obsidian+Zen done; Krita errored; Blender/OBS/Inkscape/Audacity/Ardour in queue (log: %TEMP%/install2.log).
+Gotcha: this tool layer un-escapes backslashes in commands; in python edits use chr(92) or avoid backslash literals.
+
 ## Queue (do in order)
-1. Jarvis: `jarvis daily` briefing that pulls Friday/Alfred/Wall-E vault data; default tools for more agents. 2. Phase 7 rest: LinkedIn/blog/portfolio draft pipeline (Friday+Vision), content-calendar notes (vault Socials/). 3. Voice foundation (whisper.cpp + Piper) as `jarvis listen`. 4. Phase 9: sandbox Ultron (Windows Sandbox/Docker), focus-mode script. 5. Cloud fallback: blocked on user's free-tier keys. 6. Phases 1/3 (Linux, Zen, creative apps) deferred by user; install-able-now creative apps (Krita, Blender, Ardour, OBS via winget) is a candidate.
+1. Build+test ultron sandbox image once Docker is up (`ultron sandbox build`, then analyze examples/firmware_agent.elf). 2. Retry failed winget installs (Krita) and wire Vision to launch apps (xdg-open equivalents: `vision open <project>`). 3. Phase 9: focus-mode script (stop Ollama/agents, power plan). 4. Alfred: system-design mentor (its own Phase 6). 5. Cloud fallback blocked on user's free-tier keys. 6. Phases 1/3 Linux/OS deferred by user.
