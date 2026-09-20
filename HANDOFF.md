@@ -37,5 +37,8 @@ App installs: Obsidian, Zen, OBS, Audacity OK. Krita/Blender/Inkscape failed und
 ## Also done (round 3)
 Portable Blender 5.2.1 + Krita 6.0.4 in ~/tools (winget per-user installers don't exist; machine-wide MSI needs UAC). Inkscape/Ardour still missing (no non-admin path). Vision launcher finds them. `bootstrap/prereqs.py [--install]` checks git/python/ollama/java/docker/Ghidra11. CI (pytest, py3.12) added to jarvis, wall-e, tars, vision (verified all pass in clean python:3.12 containers first); check `gh run list -R n-3-0-l-d-3-v/<repo>`. Friday has no CI yet (2-min suite; needs requirements.txt) - add after verifying in a container.
 
+## CI (all 7 repos green as of 2026-09-20)
+jarvis/wall-e/tars/vision/friday: pytest py3.12 (each verified in clean python:3.12 containers first). ultron: README test-count check needs updating whenever tests are added (`# N tests` line ~329). alfred: apps/api/pytest.ini sets pythonpath; TARS tests need git identity env (conftest). Lesson: verify in a clean container BEFORE pushing CI.
+
 ## Queue (do in order)
-1. Verify the 4 CI runs are green; fix if not. 2. Friday CI (verify in container first). 3. Alfred vault-aware explanations end to end. 4. Ultron eval suite in CI. 5. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 6. Phases 1/3 Linux/Zen config deferred by user.
+1. Alfred vault-aware explanations end to end (read Friday notes before explaining; test with real devNote). 2. README badges + a top-level README refresh in 10x (repo-map test counts are stale). 3. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 4. Inkscape/Ardour need admin (user) or portable 7z. 5. Phases 1/3 Linux/Zen config deferred by user.
