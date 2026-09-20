@@ -34,5 +34,8 @@ Alfred system-design mentor (`sd_list/sd_hint/sd_review` MCP tools; 6 scenarios;
 `vision open <project> [--app] [--dry-run]` launches Audacity/OBS/etc by project type (verified dry-run). Friday `--health` probes providers in parallel, 5s cap. Wall-E report lists `Reason:` lines and flags low disk (<10% or <20GB); cleaned pip+Docker build cache (disk now ~92% used; user's Downloads is 18GB - user's call). Gemini key in Friday fails (`response.text` empty) - check key/quota.
 App installs: Obsidian, Zen, OBS, Audacity OK. Krita/Blender/Inkscape failed under UAC (machine-wide MSI cancelled); retrying with `--scope user` (log %TEMP%/install3.log).
 
+## Also done (round 3)
+Portable Blender 5.2.1 + Krita 6.0.4 in ~/tools (winget per-user installers don't exist; machine-wide MSI needs UAC). Inkscape/Ardour still missing (no non-admin path). Vision launcher finds them. `bootstrap/prereqs.py [--install]` checks git/python/ollama/java/docker/Ghidra11. CI (pytest, py3.12) added to jarvis, wall-e, tars, vision (verified all pass in clean python:3.12 containers first); check `gh run list -R n-3-0-l-d-3-v/<repo>`. Friday has no CI yet (2-min suite; needs requirements.txt) - add after verifying in a container.
+
 ## Queue (do in order)
-1. Confirm install3 results (Krita/Blender/Inkscape/Ardour); if a user-scope install fails, use portable zips. 2. Look into Friday's Gemini failure. 3. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 4. Phases 1/3 Linux/Zen config deferred by user. 5. New ideas: Alfred vault-aware explanations, Ultron eval suite in CI, bootstrap: add Ghidra/Ollama/JDK steps.
+1. Verify the 4 CI runs are green; fix if not. 2. Friday CI (verify in container first). 3. Alfred vault-aware explanations end to end. 4. Ultron eval suite in CI. 5. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 6. Phases 1/3 Linux/Zen config deferred by user.
