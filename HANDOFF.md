@@ -27,5 +27,8 @@ Gotcha: this tool layer un-escapes backslashes in commands; in python edits use 
 
 `jarvis do "<sentence>" [--dry-run]`: local qwen2.5:7b plans ONE tool call (validated against real MCP schema) then executes; verified live (TARS scaffold, Vision list, Friday capture). `wall-e focus on|off` (power saver + unload models, restores plan). `ultron sandbox build|analyze` VERIFIED: image ultron-sandbox (JDK21+Ghidra 11.4.3), no network (DNS fails), same 115 artifacts/35 claims as host; found+fixed a py3.14 argparse `%` help bug. Docker Desktop is up.
 
+## Latest
+Alfred system-design mentor (`sd_list/sd_hint/sd_review` MCP tools; 6 scenarios; reveal gate). Ultron sandbox image verified. Wall-E now checks all 6 sibling repos; its Sunday task really ran (report in devNote/agents/Wall-E) and flagged: Friday `--health` ~9s (jarvis health timeout raised to 30s) and DISK ~9.5% free (models ~7GB + Docker image 1.8GB) - free space soon. All repos' tests are hermetic to the global VAULT_PATH.
+
 ## Queue (do in order)
-1. (sandbox done) Retry failed winget installs (Krita; check Blender) via winget one at a time and wire Vision to launch apps (xdg-open equivalents: `vision open <project>`). 3. Phase 9: focus-mode script (stop Ollama/agents, power plan). 4. Alfred: system-design mentor (its own Phase 6). 5. Cloud fallback blocked on user's free-tier keys. 6. Phases 1/3 Linux/OS deferred by user.
+1. Retry winget installs one at a time (Krita errored; verify Blender/Inkscape/Audacity/OBS/Ardour). 2. `vision open <project>` launcher for installed apps. 3. Speed up Friday --health (parallel/shorter provider probes). 4. Wall-E disk-space warning threshold in report status. 5. Cloud fallback blocked on user's free-tier keys. 6. Phases 1/3 Linux/Zen config deferred by user.
