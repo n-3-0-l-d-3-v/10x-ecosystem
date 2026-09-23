@@ -8,4 +8,5 @@ agents:
   - {name: wall-e, repo: n-3-0-l-d-3-v/wall-e, branch: main, install: "pip install -e .", health: "wall-e --health"}
   - {name: tars, repo: n-3-0-l-d-3-v/tars, branch: main, install: "pip install -e .", health: "tars --health"}
   - {name: vision, repo: n-3-0-l-d-3-v/vision, branch: main, install: "pip install -e .", health: "vision --health"}
+# `test` defaults to DEFAULT_TEST in bootstrap.py (used by --update).
 models: ["qwen2.5:3b", "qwen2.5:7b"]

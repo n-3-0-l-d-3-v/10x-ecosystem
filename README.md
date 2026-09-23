@@ -38,6 +38,9 @@ python bootstrap/bootstrap.py --vault ~/vault --set-env
 # JAVA_HOME, GHIDRA_INSTALL_DIR for your user (setx / ~/.profile)
 ```
 
+Later, `python bootstrap/bootstrap.py --update` pulls every agent, runs its tests,
+and rolls a clone back to its previous commit if the new version fails.
+
 Open a new terminal, then open the vault's `Home.md` in Obsidian for the
 LifeOS dashboard. Agents write under `agents/<Name>/`.
 

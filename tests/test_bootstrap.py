@@ -97,3 +97,55 @@ def test_install_template_never_overwrites(tmp_path):
 def test_main_vault_dry_run_writes_nothing(tmp_path):
     assert b.main(["--root", str(tmp_path / "x"), "--dry-run", "--skip-models", "--vault", str(tmp_path / "v"), "--set-env"]) == 0
     assert not (tmp_path / "v").exists()
+
+
+# --- safe update -------------------------------------------------------------
+
+import subprocess  # noqa: E402
+
+
+def _g(cwd, *args):
+    subprocess.run(["git", *args], cwd=cwd, check=True, capture_output=True,
+                   env={**__import__("os").environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+                        "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"})
+
+
+def _setup(tmp_path):
+    origin = tmp_path / "origin"
+    origin.mkdir()
+    _g(origin, "init", "-q", "-b", "main")
+    (origin / "check.py").write_text("import sys; sys.exit(0)\n")
+    _g(origin, "add", "-A")
+    _g(origin, "commit", "-q", "-m", "ok")
+    root = tmp_path / "root"
+    root.mkdir()
+    _g(root, "clone", "-q", str(origin), "agent")
+    agent = {"name": "agent", "install": "pip --version", "test": "python check.py"}
+    return origin, root, agent
+
+
+def _push(origin, code, msg):
+    (origin / "check.py").write_text(code)
+    _g(origin, "commit", "-q", "-am", msg)
+
+
+def _head(repo):
+    return subprocess.run(["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, text=True).stdout.strip()
+
+
+def test_update_keeps_passing_change_and_rolls_back_failing_one(tmp_path):
+    origin, root, agent = _setup(tmp_path)
+    assert b.safe_update(agent, root) == "up to date"
+    _push(origin, "import sys; sys.exit(0)  # v2\n", "v2")
+    assert b.safe_update(agent, root).startswith("updated")
+    good = _head(root / "agent")
+    _push(origin, "import sys; sys.exit(1)\n", "broken")
+    assert b.safe_update(agent, root).startswith("ROLLED BACK")
+    assert _head(root / "agent") == good
+
+
+def test_update_skips_dirty_and_uncloned(tmp_path):
+    origin, root, agent = _setup(tmp_path)
+    (root / "agent" / "wip.txt").write_text("mine")
+    assert b.safe_update(agent, root).startswith("skipped")
+    assert b.safe_update({**agent, "name": "nope"}, root).startswith("not cloned")
