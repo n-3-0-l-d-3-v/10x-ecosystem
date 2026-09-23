@@ -20,7 +20,7 @@ what each agent does, and the rules of working. Last updated 2026-09-23.
   similar hardware can reproduce with one or two commands.
 - This is meant to be one of their best pieces of work. It is not a toy: it
   must be real, used daily, understood, then "broken" and refined repeatedly.
-- **Current phase: BUILD.** The user is deliberately not interfering. The job is
+- **Build phase complete (first draft, 2026-09-23); now the user's hands-on phase.** During BUILD the rule was: The user is deliberately not interfering. The job is
   to keep building through tickets/phases autonomously at max quality and max
   token efficiency, stopping only for decisions that genuinely need a human.
   After the first complete build draft, the user steps in to learn it, use it,
@@ -112,7 +112,8 @@ what each agent does, and the rules of working. Last updated 2026-09-23.
   `ultron-sandbox` built), Obsidian, Zen, OBS, Audacity, portable Blender 5.2.1 and
   Krita 6.0.4 in `~/tools`. Inkscape/Ardour are NOT installed (need admin/UAC).
   Godot via winget. faster-whisper for offline speech.
-- Scheduled task `WallE-WeeklyReport` runs `wall-e report` Sundays 09:00.
+- Scheduled tasks: `WallE-WeeklyReport` (`wall-e report`, Sun 09:00) and
+  `Friday-WeeklyGitHub` (`friday github`, Sun 09:15), managed by `wall-e schedule`.
 - Friday's Gemini free quota is exhausted (429); Groq works; local Ollama is the
   always-on fallback.
 
@@ -141,7 +142,7 @@ Test counts are approximate as of 2026-09-23; CI (GitHub Actions) is green on al
   [--do]` (offline STT + Windows TTS); `jarvis health`; **Jarvis MCP server**
   `python -m jarvis.mcp_server` (plan, run(confirm), route, agent_tool, health,
   daily). Not registered in the user's Claude config (their choice).
-- **Friday** (knowledge, ~467 tests): capture/classify/format/save/push/link
+- **Friday** (knowledge, ~483 tests): capture/classify/format/save/push/link
   into devNote; wiki synthesis; MCP (18+ tools); providers Groq → Gemini →
   local Ollama (`FRIDAY_AI_PRIMARY=ollama` for local-first); offline whisper
   fallback; `friday github [--readme]`, `friday draft <linkedin|blog|devto|thread> <note>`
@@ -149,6 +150,9 @@ Test counts are approximate as of 2026-09-23; CI (GitHub Actions) is green on al
   `friday portfolio` (static page), `friday lifeos` (create today's daily note
   from the vault template + streaks), `friday habit <name> [--undo]`; MCP
   `log_habit`, `today`. Note: an older `friday today` shows the daily log.
+  `friday ideas` (weekly post ideas grounded in the window's notes),
+  `friday calendar` (Socials/ content calendar); YouTube notes carry a
+  collapsed clickable-timestamp transcript.
 - **Alfred** (learning, ~582 tests, run from `apps/api`): LeetCode Socratic hint
   ladder + AC gate (no solution before you pass), personas, reviews, interview
   mode, browser extension; system-design mentor (6 scenarios, ladder, rubric,
@@ -161,17 +165,19 @@ Test counts are approximate as of 2026-09-23; CI (GitHub Actions) is green on al
   NL `ask`, map/reach/diff; `ultron sandbox build|analyze` (no network,
   read-only, caps dropped; verified); `analyze` writes a pending, claim-cited RE
   summary to the vault when VAULT_PATH is set; `ultron vault approve`.
-- **TARS** (code, ~56 tests): `tars new <template> <name>` (python-cli,
+- **TARS** (code, ~94 tests): `tars new <template> <name>` (python-cli,
   node-cli), `tars test|build` (language detection), branch/commit inside
-  `TARS_ALLOWED_ROOTS`; deliberately no push. MCP.
+  `TARS_ALLOWED_ROOTS`; deliberately no push. `tars guard install|scan|uninstall`
+  (pre-commit secret blocker, installed in all 8 repos). MCP incl. `guard_scan`.
 - **Vision** (creative, ~83 tests): `vision new <name> --type
   music|design|video|photo|writing|game [--private]`, `vision excalidraw`,
   `vision assets`, `vision list`, `vision open <project>` (launches the right
   installed app), `vision diagram "<english or A -> B: label>"` (local model
   extracts boxes/arrows; deterministic layered layout → valid Excalidraw). MCP.
-- **Wall-E** (health, ~50 tests): `wall-e report` (agent health, privacy audit,
-  contract compliance, disk/git hygiene, reasons, cleanup suggestions when disk
-  low) → vault; `wall-e schedule install|remove|status`; `wall-e focus on|off`
+- **Wall-E** (health, ~58 tests): `wall-e report` (agent health, privacy audit,
+  contract compliance, disk/git hygiene, setup drift: models/sandbox image/
+  schedules/guard hooks, reasons, cleanup suggestions when disk low) → vault;
+  `wall-e schedule install|remove|status [--job all|report|github]`; `wall-e focus on|off`
   (power saver + unload models, restores plan); `wall-e cleanup` (suggest-only).
 - **10x repo**: README (front door), HANDOFF.md (live state/queue),
   docs/agents, docs/phases, docs/repo-map.md (partly stale), docs/omniroute-privacy-spec.md,
@@ -207,6 +213,10 @@ Test counts are approximate as of 2026-09-23; CI (GitHub Actions) is green on al
 - Deleting Downloads/temp files; committing their devNote vault changes.
 
 ## 9. What's next
+
+First complete build draft is done (2026-09-23). The user now learns, uses
+and breaks it; fix their findings first. Remaining queue: `HANDOFF.md`.
+Historical note from before the handover:
 
 See `HANDOFF.md` → Queue. Next up (as of this writing): TARS `guard`
 (pre-commit secret blocking), Friday weekly content `ideas` → Socials drafts,

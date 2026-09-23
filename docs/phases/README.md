@@ -122,3 +122,12 @@ agent/repo layer is solid.
 - Phase 8: `bootstrap/bootstrap.py` one-command setup (verified live).
 - Phase 9: Wall-E weekly report scheduled via Task Scheduler.
 See HANDOFF.md for the live queue.
+
+---
+## Status update (2026-09-23): first complete build draft
+- Phase 2: media-note pipeline done (YouTube notes carry a collapsed, clickable-timestamp transcript).
+- Phase 4: TARS built (scaffold/test/build/git + `tars guard` pre-commit secret blocking in every repo). Container runtime: Docker Desktop (Podman revisit with Phase 1 Linux).
+- Phase 7: `friday ideas` (weekly grounded post ideas), `friday draft`, `friday calendar`, `friday github` snapshot scheduled weekly, `friday portfolio`. Posting stays manual by design.
+- Phase 8: decided plain Python bootstrap + manifest (no Nix/Ansible while on Windows): `prereqs.py`, `bootstrap.py --vault --set-env --update` (test-gated updates with rollback).
+- Phase 9: Wall-E weekly report + setup-drift checks, focus mode, Ultron network-less sandbox, scheduled jobs. Face unlock and per-agent bubblewrap wait for Phase 1 (Linux).
+- Still deferred/blocked: Phases 1 and 3 (user), cloud fallback keys (user).

@@ -5,7 +5,7 @@ orchestrator (Jarvis) over MCP. Everything runs on your machine: local models vi
 Ollama, one shared Obsidian vault as memory, no paid services. Private content
 never leaves the machine (see [`docs/omniroute-privacy-spec.md`](docs/omniroute-privacy-spec.md)).
 
-**Status:** first build draft. 1,755 tests across the 7 repos, all green in CI.
+**Status:** first complete build draft. 1,819 tests across the 7 agent repos, all green in CI.
 Next steps and known gaps are in [`HANDOFF.md`](HANDOFF.md).
 
 ## The agents
@@ -13,12 +13,12 @@ Next steps and known gaps are in [`HANDOFF.md`](HANDOFF.md).
 | Agent | Job | Try it | Tests |
 |---|---|---|---|
 | [jarvis](https://github.com/n-3-0-l-d-3-v/jarvis) | Orchestrator: routes a sentence to the right agent (local model), enforces privacy tiers, plans and runs tool calls, voice in | `jarvis do "capture a note that X, then create a python-cli project called Y"` · `jarvis ask "explain two pointers"` · `jarvis listen --do` · `jarvis daily` · MCP: `python -m jarvis.mcp_server` | 129 |
-| [friday](https://github.com/n-3-0-l-d-3-v/friday) | Knowledge capture into the vault, synthesis, GitHub presence, post drafts, portfolio page | `friday note "..."` · `friday draft linkedin <note>` · `friday github --readme` · `friday portfolio` (works offline via local model) | 460 |
+| [friday](https://github.com/n-3-0-l-d-3-v/friday) | Knowledge capture into the vault, synthesis, GitHub presence, post drafts, portfolio page | `friday note "..."` · `friday draft linkedin <note>` · `friday github --readme` · `friday ideas` · `friday calendar` · `friday portfolio` (works offline via local model) | 483 |
 | [alfred](https://github.com/n-3-0-l-d-3-v/alfred) | Learning mentor: LeetCode hint ladder with an answer gate, system-design practice, concept explanations built on your own notes | `python -m alfred --explain "binary search"` · `python -m alfred --quiz "redis persistence"` (from `apps/api`) · MCP: `sd_hint`, `sd_review`, `quiz_*` | 581 |
-| [ultron](https://github.com/n-3-0-l-d-3-v/ultron) | Evidence-first binary/firmware analysis on Ghidra; network-less Docker sandbox | `ultron sandbox analyze <file> --project <dir>` · `ultron -P <dir> ask "what is the attack surface?"` | 388 |
-| [tars](https://github.com/n-3-0-l-d-3-v/tars) | Scaffold projects, run tests/builds, git branch/commit inside an allowed-roots boundary (never pushes) | `tars new python-cli demo` · `tars test` | 56 |
+| [ultron](https://github.com/n-3-0-l-d-3-v/ultron) | Evidence-first binary/firmware analysis on Ghidra; network-less Docker sandbox | `ultron sandbox analyze <file> --project <dir>` · `ultron -P <dir> ask "what is the attack surface?"` | 391 |
+| [tars](https://github.com/n-3-0-l-d-3-v/tars) | Scaffold projects, run tests/builds, git branch/commit inside an allowed-roots boundary (never pushes) | `tars new python-cli demo` · `tars test` · `tars guard install` (blocks secrets at commit) | 94 |
 | [vision](https://github.com/n-3-0-l-d-3-v/vision) | Creative projects: scaffolding, Excalidraw files, asset catalogs, opens the right app | `vision new song --type music` · `vision open song` · `vision diagram "a client calls a gateway which calls auth"` | 83 |
-| [wall-e](https://github.com/n-3-0-l-d-3-v/wall-e) | Weekly health + privacy audit report into the vault, focus/battery mode | `wall-e report` · `wall-e cleanup` · `wall-e focus on` · `wall-e schedule install` | 50 |
+| [wall-e](https://github.com/n-3-0-l-d-3-v/wall-e) | Weekly health, privacy audit and setup-drift report into the vault, weekly jobs, focus/battery mode | `wall-e report` · `wall-e cleanup` · `wall-e focus on` · `wall-e schedule install` | 58 |
 
 ## Use it from any MCP client
 
