@@ -43,9 +43,13 @@ jarvis/wall-e/tars/vision/friday: pytest py3.12 (each verified in clean python:3
 ## Latest (2026-09-23)
 Alfred now has a free local-model backend (`llm_backend=auto` prefers Ollama qwen2.5:7b; `off` in tests) for personalized nudges (still AC-gated) and `explain` (vault-aware: ranked whole-word retrieval over devNote, citations filtered to real notes). `jarvis ask "explain X"` -> Alfred explain_concept. README rewritten with commands + test counts (1,710 total).
 
+## Done (2026-09-23 burst)
+Friday local Ollama provider (fallback always; `FRIDAY_AI_PRIMARY=ollama` to go local-first) + offline whisper fallback. `jarvis do` multi-step cross-agent (<=3 steps, schema-forced JSON, per-step schema+tier validation, confirm, {{prev}}, invented optional args dropped) + `jarvis tools [--refresh]` cache (~/.jarvis/tools.json). `vision diagram "<english or A -> B: label>"` -> tidy Excalidraw. `wall-e cleanup` (suggest-only). A demo note "Jarvis Multi Step Planning" was captured into devNote (12-ai-ml/planning) during a live test - harmless, user may delete.
+Gotcha: gate commits with `pytest && git commit` (one broken Vision commit landed before a fix).
+
 ## Queue (do in order)
-1. Friday: route its classification/synthesis to local Ollama too (it uses Groq/Gemini; Gemini quota is exhausted) - a `FRIDAY_AI_PRIMARY=ollama` provider.
-2. Jarvis `do`: multi-step plans (chain 2-3 tool calls, each validated) with confirmation before side effects.
-3. Vision: generate Excalidraw diagrams from text (local model -> elements JSON) e.g. architecture sketches.
-4. Wall-E: auto-draft cleanup suggestions (largest dirs, stale caches) without deleting.
-5. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. Inkscape/Ardour need admin. Phases 1/3 (Linux/Zen) deferred by user.
+1. Alfred `quiz`: questions generated from the user's own vault notes on a topic, answers graded locally, results written as spaced-repetition due dates (agents/Alfred).
+2. Jarvis as an MCP server (`jarvis mcp`): one server exposing do/ask/route/health so any MCP client (Claude Code, etc.) gets the whole gauntlet.
+3. Wall-E weekly report: include cleanup summary when disk is low.
+4. `jarvis listen` -> `do` path (voice into multi-step plans).
+5. Blocked on user: cloud-fallback keys; Inkscape/Ardour admin; Phases 1/3.
