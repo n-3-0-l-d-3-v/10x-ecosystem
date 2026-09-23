@@ -47,9 +47,12 @@ Alfred now has a free local-model backend (`llm_backend=auto` prefers Ollama qwe
 Friday local Ollama provider (fallback always; `FRIDAY_AI_PRIMARY=ollama` to go local-first) + offline whisper fallback. `jarvis do` multi-step cross-agent (<=3 steps, schema-forced JSON, per-step schema+tier validation, confirm, {{prev}}, invented optional args dropped) + `jarvis tools [--refresh]` cache (~/.jarvis/tools.json). `vision diagram "<english or A -> B: label>"` -> tidy Excalidraw. `wall-e cleanup` (suggest-only). A demo note "Jarvis Multi Step Planning" was captured into devNote (12-ai-ml/planning) during a live test - harmless, user may delete.
 Gotcha: gate commits with `pytest && git commit` (one broken Vision commit landed before a fix).
 
+## Done (continued)
+Alfred `--quiz` / MCP quiz_* (vault-grounded questions, local grading + key-term floor, SM-2-lite next_due). Jarvis MCP server (`python -m jarvis.mcp_server`: plan, run(confirm), route, agent_tool, health, daily) - NOT registered in the user's Claude config (their call). `jarvis listen --do`. Wall-E report attaches cleanup suggestions when disk low.
+
 ## Queue (do in order)
-1. Alfred `quiz`: questions generated from the user's own vault notes on a topic, answers graded locally, results written as spaced-repetition due dates (agents/Alfred).
-2. Jarvis as an MCP server (`jarvis mcp`): one server exposing do/ask/route/health so any MCP client (Claude Code, etc.) gets the whole gauntlet.
-3. Wall-E weekly report: include cleanup summary when disk is low.
-4. `jarvis listen` -> `do` path (voice into multi-step plans).
-5. Blocked on user: cloud-fallback keys; Inkscape/Ardour admin; Phases 1/3.
+1. Ultron: after analyze, write a pending vault summary note citing claim ids (shows in jarvis daily).
+2. Friday `today`: create Daily/YYYY-MM-DD.md from the vault template (renders tp.date calls) so LifeOS streaks work.
+3. TARS `guard`: install a git pre-commit hook that blocks secrets/.env/keys from being committed (reuse Ultron's secret detectors if clean to import, else own patterns).
+4. Friday `ideas`: weekly content ideas from the week's captured notes -> Socials/ drafts.
+5. Blocked on user: cloud-fallback keys; Inkscape/Ardour admin; Phases 1/3; registering Jarvis MCP in Claude config.
