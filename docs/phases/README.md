@@ -11,13 +11,13 @@ Each phase below is a ticket: **Goal**, **Tasks**, **Success criteria**, **Statu
 ---
 
 ## Phase 0 — Spec Freeze
-**Status: in progress (this session).**
+**Status: done.**
 
 - [x] Hardware/software inventory of what already exists (jarvisOS, yugen, alfredOS docs)
 - [x] Agent roster finalized: Jarvis/Friday/TARS/Ultron/Alfred/Wall-E/Vision, mapped to existing code where it exists
 - [x] Repo strategy: isolated repos per agent + umbrella ecosystem repo
 - [x] Hardware inventoried (this machine): Intel i5-11400H, 32GB RAM, RTX 3050 Laptop (~4GB VRAM). Used directly in Phase 5's model sizing.
-- [ ] Vault structure sketch finalized (Phase 2 will build it, sketch happens here)
+- [x] Vault structure sketch finalized (built in Phase 2)
 
 **Success criteria:** every agent has a spec file, every existing asset is mapped, no ambiguity left before code starts.
 
@@ -33,14 +33,13 @@ agent/repo layer is solid.
 ---
 
 ## Phase 2 — Brain (Obsidian)
-**Status: not started. Vault skeleton folders created in this repo (`vault/`) but empty.**
+**Status: done** (media pipeline and template install finished 2026-09-23).
 
-- [ ] Decide: does `devNote` (Friday's existing vault) become the Obsidian vault, or
-  does Obsidian vault wrap/link to it?
-- [ ] LifeOS dashboard (Dataview homepage)
-- [ ] Daily notes + streak/habit tracking templates
-- [ ] Media-note pipeline (YouTube transcript + timestamps)
-- [ ] Plugin list finalized (Dataview, Templater, Calendar, Excalidraw, Media Extended, Tasks, QuickAdd, Linter, Style Settings)
+- [x] Decided: `devNote` IS the vault (`VAULT_PATH`); agents write under `agents/<Name>/`.
+- [x] LifeOS dashboard (Dataview homepage)
+- [x] Daily notes + streak/habit tracking templates (`friday lifeos`, `friday habit`)
+- [x] Media-note pipeline (YouTube transcript + clickable timestamps)
+- [x] Plugin list finalized (Dataview, Templater, Calendar, Excalidraw, Media Extended, Tasks, QuickAdd, Linter, Style Settings)
 
 **Success criteria:** single vault is the source of truth Friday, Alfred, Wall-E, and Vision all read/write to.
 
@@ -56,14 +55,14 @@ agent/repo layer is solid.
 ---
 
 ## Phase 4 — Dev + Security + Systems Toolchain
-**Status: Ultron done. TARS not started.**
+**Status: done** (toolchain list stays per-project; TARS detects Python/Node/Rust/Go).
 
 - [ ] Language toolchain list finalized (Rust/Go/Python/C/C++/JS-TS/Zig/Java as needed)
 - [x] ~~Ultron wraps `yugen`~~ — done, full conversion (not a wrapper): sandboxed network lockdown, vault writes with human review gate, `agent.yaml`, health check. See `../repo-map.md`.
-- [ ] TARS scaffolding tool built (replaces the `alfredOS` throwaway `dev` script)
-- [ ] Container runtime decision (Podman preferred per original plan)
+- [x] TARS scaffolding tool built (replaces the `alfredOS` throwaway `dev` script), plus `tars guard`
+- [x] Container runtime: Docker Desktop on Windows now; Podman revisit with Phase 1 Linux
 
-**Success criteria:** ~~Ultron produces a real evidence-cited finding via yugen end to end~~ — met; TARS scaffolds a real project (pending).
+**Success criteria:** ~~Ultron produces a real evidence-cited finding via yugen end to end~~ — met; TARS scaffolds a real project — met.
 
 ---
 
@@ -95,22 +94,22 @@ agent/repo layer is solid.
 
 **Success criteria per agent:** does its real daily job end-to-end, writes to the vault correctly, respects its declared sensitivity tier. All 7 meet this individually. Jarvis routing to real sibling agents over MCP is verified, and Wall-E polling all of them (including Jarvis itself) is verified, not just unit-tested — the ecosystem is wired together, not just seven parallel CLIs.
 
-**What Phase 6 does NOT yet mean:** TARS/Vision aren't yet registered in Jarvis's `agents.yaml` (Jarvis currently only knows about Friday/Ultron/Alfred) — routing `jarvis ask` to TARS or Vision needs that registry updated. Small follow-up, not done automatically by building the agents themselves.
+Later: TARS and Vision were registered in Jarvis's `agents.yaml`; Jarvis now routes and plans across all MCP agents.
 
 ---
 
 ## Phase 7 — Socials & Creative Depth
-**Status: not started.** GitHub maxing (contribution graphs, PR/star tracking), LinkedIn/Medium/Dev.to/portfolio pipeline, Reddit/Discord workflows — all driven from vault + Friday/Vision.
+**Status: core done (see 2026-09-23 update); Reddit/Discord posting stays manual by design.** GitHub maxing (contribution graphs, PR/star tracking), LinkedIn/Medium/Dev.to/portfolio pipeline, Reddit/Discord workflows — all driven from vault + Friday/Vision.
 
 ---
 
 ## Phase 8 — Packaging & Reproducibility
-**Status: not started.** Decide Nix flakes vs. Ansible+Compose for the isolated-repos-plus-umbrella structure. One-command bootstrap. This is also where the "hold the whole setup, shareable to anyone with the hardware" goal gets solved concretely.
+**Status: done for Windows (see 2026-09-23 update).** Decide Nix flakes vs. Ansible+Compose for the isolated-repos-plus-umbrella structure. One-command bootstrap. This is also where the "hold the whole setup, shareable to anyone with the hardware" goal gets solved concretely.
 
 ---
 
 ## Phase 9 — Hardening, Performance, Continuous Loop
-**Status: not started.** Sandboxing (bubblewrap/firejail per-agent, especially Ultron), Focus Modes, Wall-E's weekly cadence running for real, update strategy that doesn't break things, computer-vision face-unlock-after-password layer if hardware supports it.
+**Status: done except Linux-only items (see 2026-09-23 update).** Sandboxing (bubblewrap/firejail per-agent, especially Ultron), Focus Modes, Wall-E's weekly cadence running for real, update strategy that doesn't break things, computer-vision face-unlock-after-password layer if hardware supports it.
 
 
 ---
