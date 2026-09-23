@@ -1,4 +1,4 @@
-# HANDOFF — read this first in any new session (keep it short, update at each milestone)
+# HANDOFF — live state + queue. Read PROJECT_CONTEXT.md first for the full picture.
 
 ## Rules (user-set, durable)
 - Autonomous: keep working through tickets/phases; ask only on real design ambiguity.
@@ -50,9 +50,13 @@ Gotcha: gate commits with `pytest && git commit` (one broken Vision commit lande
 ## Done (continued)
 Alfred `--quiz` / MCP quiz_* (vault-grounded questions, local grading + key-term floor, SM-2-lite next_due). Jarvis MCP server (`python -m jarvis.mcp_server`: plan, run(confirm), route, agent_tool, health, daily) - NOT registered in the user's Claude config (their call). `jarvis listen --do`. Wall-E report attaches cleanup suggestions when disk low.
 
+## Done (latest)
+Ultron analyze -> pending claim-cited vault summary. Friday `lifeos` (daily note from template + streaks), `habit <name> [--undo]`, MCP log_habit/today. All 7 repos clean and pushed.
+
 ## Queue (do in order)
-1. Ultron: after analyze, write a pending vault summary note citing claim ids (shows in jarvis daily).
-2. Friday `today`: create Daily/YYYY-MM-DD.md from the vault template (renders tp.date calls) so LifeOS streaks work.
-3. TARS `guard`: install a git pre-commit hook that blocks secrets/.env/keys from being committed (reuse Ultron's secret detectors if clean to import, else own patterns).
-4. Friday `ideas`: weekly content ideas from the week's captured notes -> Socials/ drafts.
-5. Blocked on user: cloud-fallback keys; Inkscape/Ardour admin; Phases 1/3; registering Jarvis MCP in Claude config.
+1. TARS `guard`: install a git pre-commit hook blocking secrets/.env/private keys (own patterns; optionally mirror Ultron's detector rules).
+2. Friday `ideas`: weekly content ideas from the week's captured notes -> Socials/ drafts (local model, grounded, draft-only).
+3. Phase 7 depth: content calendar view + GitHub stats snapshot scheduled weekly (via wall-e schedule pattern).
+4. Phase 8: bootstrap sets VAULT_PATH/JAVA_HOME/GHIDRA env and installs the LifeOS template into a chosen vault; refresh docs/repo-map.md (stale).
+5. Phase 9 hardening: Wall-E checks sandbox image exists, Ollama models present, scheduled task registered.
+6. Blocked on user: see PROJECT_CONTEXT.md section 8.
