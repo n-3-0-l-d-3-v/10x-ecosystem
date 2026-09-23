@@ -28,4 +28,5 @@ Current command surface per agent: `docs/repo-map.md`. How to try everything: RE
 1. Fix whatever the user finds while using/breaking it (top priority).
 2. Disk: ~9% free; Wall-E flags it every report. User's call on Downloads/temp.
 3. Optional: Friday MCP tools for `ideas`/`calendar`; Jarvis routing phrases for them.
-4. Blocked on user: see PROJECT_CONTEXT.md section 8 (cloud keys, admin installs, Phases 1/3, MCP registration, renaming 10x-ecosystem).
+4. Context-window hardening (started): Ollama defaults to num_ctx 4096 and silently drops the START of an overflowing prompt. Done: Jarvis `ollama_client.context_options` (grows num_ctx only when needed), `friday ideas` listing budget. Still to do: same guard in Friday `ai.py`/`drafts.py`, Alfred `mentor/llm.py`, Vision `diagram.py`, Ultron `agents/backend.py` (measure with `prompt_eval_count`).
+5. Blocked on user: see PROJECT_CONTEXT.md section 8 (cloud keys, admin installs, Phases 1/3, MCP registration, renaming 10x-ecosystem).
