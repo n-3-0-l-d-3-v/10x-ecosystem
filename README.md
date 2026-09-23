@@ -1,73 +1,46 @@
-# 10x — The Ecosystem Umbrella Repo
+# 10x — a free, local-first multi-agent developer setup
 
-The single git repo tying together every isolated agent repo into one reproducible,
-free, local-first developer/creative/security setup. All 7 Gauntlet agents are
-built, tested, and wired together — see `docs/repo-map.md` for exactly which repo
-is which.
+Seven agents, each its own repo and usable on its own, wired together by an
+orchestrator (Jarvis) over MCP. Everything runs on your machine: local models via
+Ollama, one shared Obsidian vault as memory, no paid services. Private content
+never leaves the machine (see [`docs/omniroute-privacy-spec.md`](docs/omniroute-privacy-spec.md)).
 
-## Start here
+**Status:** first build draft. 1,710 tests across the 7 repos, all green in CI.
+Next steps and known gaps are in [`HANDOFF.md`](HANDOFF.md).
 
-- [`docs/repo-map.md`](docs/repo-map.md) — all 7 agent repos, what each one does,
-  test counts, and what's verified live vs. only unit-tested.
-- [`docs/omniroute-privacy-spec.md`](docs/omniroute-privacy-spec.md) — the
-  privacy/provider-routing rule: private tokens for personal work, free-tier
-  OmniRoute pool for generic work, local-only fail-closed for sensitive content.
-  Implemented for real in Jarvis's tier engine, enforced live.
-- [`docs/phases/README.md`](docs/phases/README.md) — the phased build order,
-  ticket-style, with status against each phase. Phase 6 (all 7 agents) is done;
-  Phases 1/3 (OS/browser setup) are deliberately deferred.
-- [`docs/agents/`](docs/agents/) — one spec per Gauntlet agent (Jarvis, Friday,
-  TARS, Ultron, Alfred, Wall-E, Vision).
-- [`vault/`](vault/) — Obsidian vault skeleton (folders only for now; Phase 2
-  builds this out).
+## The agents
 
-## Non-negotiables
+| Agent | Job | Try it | Tests |
+|---|---|---|---|
+| [jarvis](https://github.com/n-3-0-l-d-3-v/jarvis) | Orchestrator: routes a sentence to the right agent (local model), enforces privacy tiers, plans and runs tool calls, voice in | `jarvis do "create a new python-cli project called demo" --dry-run` · `jarvis ask "explain two pointers"` · `jarvis daily` · `jarvis listen` | 118 |
+| [friday](https://github.com/n-3-0-l-d-3-v/friday) | Knowledge capture into the vault, synthesis, GitHub presence, post drafts, portfolio page | `friday note "..."` · `friday draft linkedin <note>` · `friday github --readme` · `friday portfolio` | 454 |
+| [alfred](https://github.com/n-3-0-l-d-3-v/alfred) | Learning mentor: LeetCode hint ladder with an answer gate, system-design practice, concept explanations built on your own notes | `python -m alfred --explain "binary search"` (from `apps/api`) · MCP: `sd_hint`, `sd_review` | 574 |
+| [ultron](https://github.com/n-3-0-l-d-3-v/ultron) | Evidence-first binary/firmware analysis on Ghidra; network-less Docker sandbox | `ultron sandbox analyze <file> --project <dir>` · `ultron -P <dir> ask "what is the attack surface?"` | 388 |
+| [tars](https://github.com/n-3-0-l-d-3-v/tars) | Scaffold projects, run tests/builds, git branch/commit inside an allowed-roots boundary (never pushes) | `tars new python-cli demo` · `tars test` | 56 |
+| [vision](https://github.com/n-3-0-l-d-3-v/vision) | Creative projects: scaffolding, Excalidraw files, asset catalogs, opens the right app | `vision new song --type music` · `vision open song` | 76 |
+| [wall-e](https://github.com/n-3-0-l-d-3-v/wall-e) | Weekly health + privacy audit report into the vault, focus/battery mode | `wall-e report` · `wall-e focus on` · `wall-e schedule install` | 44 |
 
-100% free/open-source/local-first. Obsidian vault is the single brain for every
-agent. Minimal interface, maximally stacked capability. Declarative and
-git-managed so the whole thing is reproducible by anyone with the hardware
-minimums. Sensitive content never leaves the machine — see the privacy spec.
+## Set it up
 
-## The 7 agents (all built, tested, pushed)
+```bash
+python bootstrap/prereqs.py --install     # git, python, ollama, java, docker, Ghidra 11
+python bootstrap/bootstrap.py             # clone + install all 7 agents, pull models, health-check
+```
 
-| Agent | Repo | Job |
-|---|---|---|
-| [friday](https://github.com/n-3-0-l-d-3-v/friday) | formerly jarvisOS | Knowledge capture, notes, writing |
-| [ultron](https://github.com/n-3-0-l-d-3-v/ultron) | formerly yugen/aether-platform | Reverse engineering, binary/firmware analysis |
-| [alfred](https://github.com/n-3-0-l-d-3-v/alfred) | formerly LeetLearn | Learning/upskilling mentor |
-| [jarvis](https://github.com/n-3-0-l-d-3-v/jarvis) | net-new | Orchestrator — routes to the others over MCP, enforces the privacy tiers |
-| [wall-e](https://github.com/n-3-0-l-d-3-v/wall-e) | net-new | System health, privacy-compliance audit, weekly reports |
-| [tars](https://github.com/n-3-0-l-d-3-v/tars) | net-new | Code scaffolding, build/test dispatch, scoped git ops |
-| [vision](https://github.com/n-3-0-l-d-3-v/vision) | net-new | Creative project scaffolding, Excalidraw, asset cataloging |
+Then set `VAULT_PATH` to your Obsidian vault (agents write under `agents/<Name>/`)
+and open [`vault/Home.md`](vault/Home.md) in Obsidian for the LifeOS dashboard.
 
-`devNote` (private) — Friday's vault store, pending the Phase 2 vault-merge decision.
+## Map
 
-Each repo is standalone-installable and independently useful on its own. Jarvis's
-`agents.yaml` is the registry that wires all of them together — see
-`docs/repo-map.md` for exact test counts and what's been verified running live
-(not just unit-tested) versus what's still a documented gap.
+- [`HANDOFF.md`](HANDOFF.md) — current state, gotchas, ordered next steps.
+- [`docs/phases/README.md`](docs/phases/README.md) — the phased plan and status.
+- [`docs/agents/`](docs/agents/) — one design spec per agent.
+- [`docs/omniroute-privacy-spec.md`](docs/omniroute-privacy-spec.md) — sensitivity tiers and provider rules.
+- [`vault/`](vault/) — Obsidian LifeOS template (dashboard, habit streaks, templates).
+- [`bootstrap/`](bootstrap/) — one-command setup.
 
-## What's next
+## Rules this project holds itself to
 
-Phase 6 (all 7 agents) and Phase 5's core (local Ollama) are both done. Remaining
-open items, in rough priority order:
-1. Vision has no MCP server yet — health-checkable, not yet dispatchable through
-   `jarvis ask`.
-2. Real OmniRoute cloud-fallback (Groq/OpenRouter free tier) isn't wired in — no
-   shared free-tier credentials configured yet. `work`/`public`-tier requests are
-   local-only (`ollama-local`) until that's added.
-3. Phase 2 (Obsidian vault) — every agent already writes to its own local
-   `vault/<Agent>/` folder; the real shared vault and the `devNote`-vs-vault
-   merge decision haven't happened yet.
-4. Phases 1/3 (Linux desktop, Zen browser) — still deliberately on hold.
-
-## Local AI (Phase 5 — done)
-
-Ollama is installed and running (`127.0.0.1:11434`), sized to this machine's
-actual hardware (Intel i5-11400H, 32GB RAM, RTX 3050 Laptop ~4GB VRAM):
-`qwen2.5:3b` (routing/classification, fits fully in VRAM) and `qwen2.5:7b`
-(larger, for future heavier local tasks). Jarvis's intent classifier now uses
-the local model instead of the old v1 keyword table — verified live to fix the
-documented "explain hash maps" misroute and to correctly route to every one of
-the 5 health-checkable agents, with an automatic, tested fallback to the
-keyword classifier if Ollama is ever down or the model isn't pulled.
+- Free and open source only; local model first, cloud only as an explicit, tier-checked fallback.
+- Private-tier data never reaches a network (Ultron and Jarvis enforce this in code).
+- Agents propose, humans approve anything irreversible: no agent pushes, publishes, or approves its own findings.

@@ -40,5 +40,12 @@ Portable Blender 5.2.1 + Krita 6.0.4 in ~/tools (winget per-user installers don'
 ## CI (all 7 repos green as of 2026-09-20)
 jarvis/wall-e/tars/vision/friday: pytest py3.12 (each verified in clean python:3.12 containers first). ultron: README test-count check needs updating whenever tests are added (`# N tests` line ~329). alfred: apps/api/pytest.ini sets pythonpath; TARS tests need git identity env (conftest). Lesson: verify in a clean container BEFORE pushing CI.
 
+## Latest (2026-09-23)
+Alfred now has a free local-model backend (`llm_backend=auto` prefers Ollama qwen2.5:7b; `off` in tests) for personalized nudges (still AC-gated) and `explain` (vault-aware: ranked whole-word retrieval over devNote, citations filtered to real notes). `jarvis ask "explain X"` -> Alfred explain_concept. README rewritten with commands + test counts (1,710 total).
+
 ## Queue (do in order)
-1. Alfred vault-aware explanations end to end (read Friday notes before explaining; test with real devNote). 2. README badges + a top-level README refresh in 10x (repo-map test counts are stale). 3. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. 4. Inkscape/Ardour need admin (user) or portable 7z. 5. Phases 1/3 Linux/Zen config deferred by user.
+1. Friday: route its classification/synthesis to local Ollama too (it uses Groq/Gemini; Gemini quota is exhausted) - a `FRIDAY_AI_PRIMARY=ollama` provider.
+2. Jarvis `do`: multi-step plans (chain 2-3 tool calls, each validated) with confirmation before side effects.
+3. Vision: generate Excalidraw diagrams from text (local model -> elements JSON) e.g. architecture sketches.
+4. Wall-E: auto-draft cleanup suggestions (largest dirs, stale caches) without deleting.
+5. Cloud fallback blocked on user's free-tier Groq/OpenRouter keys. Inkscape/Ardour need admin. Phases 1/3 (Linux/Zen) deferred by user.
