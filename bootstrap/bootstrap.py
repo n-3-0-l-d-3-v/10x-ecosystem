@@ -1,6 +1,11 @@
 """One-command setup: clone every agent, install it, pull local models, health-check.
 
     python bootstrap/bootstrap.py [--root DIR] [--only a,b] [--dry-run] [--skip-models]
+                                  [--vault DIR] [--set-env]
+
+--vault DIR installs the LifeOS template into DIR (existing files are kept)
+and makes DIR the shared VAULT_PATH. --set-env persists VAULT_PATH,
+JAVA_HOME and GHIDRA_INSTALL_DIR for the current user (setx / ~/.profile).
 
 Idempotent: existing clones are pulled, not re-cloned. Needs git, python, pip;
 Ollama optional (models are skipped with a note if it is missing).
@@ -56,13 +61,45 @@ def dest_for(root: Path, a: dict) -> Path:
     return root / a["name"] / a.get("workdir", ".")
 
 
+def setup_env(vault: str | None, set_env: bool, dry_run: bool) -> bool:
+    """Vault template + env vars. Returns True on failure."""
+    import envsetup
+
+    if vault:
+        dest = Path(os.path.expanduser(vault))
+        if dry_run:
+            print(f"==> vault: would install LifeOS template into {dest} (existing files kept)")
+        else:
+            copied, kept = envsetup.install_template(dest)
+            print(f"==> vault: {len(copied)} template file(s) copied into {dest}, {len(kept)} existing kept")
+    if set_env:
+        todo = envsetup.pending(envsetup.detect(vault))
+        if not todo:
+            print("==> env: VAULT_PATH/JAVA_HOME/GHIDRA_INSTALL_DIR already set (or not found)")
+        for k, v in todo.items():
+            print(f"==> env: {'would set' if dry_run else 'set'} {k}={v}")
+        if todo and not dry_run:
+            try:
+                envsetup.persist(todo)
+            except RuntimeError as exc:
+                print(f"    FAILED: {exc}")
+                return True
+            print("    open a new terminal for the variables to take effect")
+    return False
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--root")
     p.add_argument("--only")
     p.add_argument("--dry-run", action="store_true")
     p.add_argument("--skip-models", action="store_true")
+    p.add_argument("--vault", help="Vault folder: install the LifeOS template there, use it as VAULT_PATH.")
+    p.add_argument("--set-env", action="store_true", help="Persist VAULT_PATH/JAVA_HOME/GHIDRA_INSTALL_DIR (user scope).")
     args = p.parse_args(argv)
+    if args.vault or args.set_env:
+        if setup_env(args.vault, args.set_env, args.dry_run):
+            return 1
     data = load_manifest()
     root = Path(os.path.expanduser(args.root or data["root_default"]))
     only = args.only.split(",") if args.only else None

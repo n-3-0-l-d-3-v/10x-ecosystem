@@ -32,11 +32,14 @@ One connection exposes the whole ecosystem: `plan`, `run` (requires confirm), `r
 
 ```bash
 python bootstrap/prereqs.py --install     # git, python, ollama, java, docker, Ghidra 11
-python bootstrap/bootstrap.py             # clone + install all 7 agents, pull models, health-check
+python bootstrap/bootstrap.py --vault ~/vault --set-env
+# clone + install all 7 agents, pull models, health-check; install the LifeOS
+# template into ~/vault (existing files kept) and persist VAULT_PATH,
+# JAVA_HOME, GHIDRA_INSTALL_DIR for your user (setx / ~/.profile)
 ```
 
-Then set `VAULT_PATH` to your Obsidian vault (agents write under `agents/<Name>/`)
-and open [`vault/Home.md`](vault/Home.md) in Obsidian for the LifeOS dashboard.
+Open a new terminal, then open the vault's `Home.md` in Obsidian for the
+LifeOS dashboard. Agents write under `agents/<Name>/`.
 
 ## Map
 

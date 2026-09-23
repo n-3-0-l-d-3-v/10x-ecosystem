@@ -34,3 +34,66 @@ def test_prereqs_report_shape():
 
     s = prereqs.report()
     assert {"git", "python", "ollama", "java", "docker", "ghidra"} <= set(s) and s["git"] and s["python"]
+
+
+# --- env + vault setup -------------------------------------------------------
+
+import envsetup  # noqa: E402
+
+
+def test_detect_prefers_env_then_tools_and_resolves_vault(tmp_path):
+    (tmp_path / "jdk-17.0.1").mkdir()
+    (tmp_path / "jdk-21.0.5+11").mkdir()
+    (tmp_path / "ghidra_11.4.3_PUBLIC").mkdir()
+    got = envsetup.detect(str(tmp_path / "v"), tools=tmp_path, env={})
+    assert got["JAVA_HOME"].endswith("jdk-21.0.5+11") and got["GHIDRA_INSTALL_DIR"].endswith("ghidra_11.4.3_PUBLIC")
+    assert got["VAULT_PATH"] == str((tmp_path / "v").resolve())
+    assert envsetup.detect(None, tools=tmp_path, env={"JAVA_HOME": "J"})["JAVA_HOME"] == "J"
+    assert envsetup.detect(None, tools=tmp_path / "none", env={}) == {}
+
+
+def test_pending_skips_values_already_set():
+    assert envsetup.pending({"A": "1", "B": "2"}, env={"A": "1", "B": "x"}) == {"B": "2"}
+
+
+def test_profile_block_is_idempotent_and_replaces_in_place():
+    once = envsetup.profile_block({"A": "1"}, "alias ll='ls -l'\n")
+    twice = envsetup.profile_block({"A": "2"}, once)
+    assert twice.count(envsetup.PROFILE_BEGIN) == 1 and 'export A="2"' in twice and "alias ll" in twice
+
+
+def test_persist_windows_uses_setx_and_raises_on_failure(monkeypatch):
+    monkeypatch.setattr(envsetup.os, "name", "nt")
+    calls = []
+
+    class R:
+        def __init__(self, rc): self.returncode, self.stderr, self.stdout = rc, "denied", ""
+    envsetup.persist({"VAULT_PATH": "C:/v"}, run=lambda a, **k: calls.append(a) or R(0))
+    assert calls == [["setx", "VAULT_PATH", "C:/v"]]
+    import pytest
+    with pytest.raises(RuntimeError):
+        envsetup.persist({"X": "1"}, run=lambda a, **k: R(1))
+
+
+def test_persist_posix_merges_block(monkeypatch, tmp_path):
+    monkeypatch.setattr(envsetup.os, "name", "posix")
+    prof = tmp_path / ".profile"
+    envsetup.persist({"A": "1"}, profile=prof)
+    envsetup.persist({"B": "2"}, profile=prof)
+    text = prof.read_text()
+    assert 'export A="1"' in text and 'export B="2"' in text and text.count(envsetup.PROFILE_BEGIN) == 1
+
+
+def test_install_template_never_overwrites(tmp_path):
+    dest = tmp_path / "vault"
+    (dest).mkdir()
+    (dest / "Home.md").write_text("mine")
+    copied, kept = envsetup.install_template(dest)
+    assert "Home.md" in kept and (dest / "Home.md").read_text() == "mine"
+    assert "System/Templates/daily.md" in copied and (dest / "Daily").is_dir()
+    assert envsetup.install_template(dest)[0] == []
+
+
+def test_main_vault_dry_run_writes_nothing(tmp_path):
+    assert b.main(["--root", str(tmp_path / "x"), "--dry-run", "--skip-models", "--vault", str(tmp_path / "v"), "--set-env"]) == 0
+    assert not (tmp_path / "v").exists()
