@@ -22,11 +22,14 @@ Current command surface per agent: `docs/repo-map.md`. How to try everything: RE
 - `pip install -e` from a temp clone repoints console scripts; reinstall from Desktop/Neil/<name> after.
 - Friday tests are slow (~2 min). Ultron README has a CI-checked test count line; update when adding tests.
 - Gate commits: `pytest && git commit`. The tars-guard hook now also runs on every commit in these repos.
+- Windows scheduled tasks: always create via `wall-e schedule install` (XML); plain `schtasks /Create` tasks won't run on battery.
+- Friday health reports catalogue drift (108 on disk vs 100 indexed on 2026-10-02); `friday doctor` self-heals it. That edits the user's vault index, so left to the user.
 - Docker Desktop is often not running; Wall-E then reports the sandbox image as "unknown".
 
 ## Queue (after the user's hands-on phase)
 1. Fix whatever the user finds while using/breaking it (top priority).
 2. Disk: ~9% free; Wall-E flags it every report. User's call on Downloads/temp.
 3. Done 2026-09-23 (after handover): Friday MCP `content_ideas`/`content_calendar` + Jarvis routing (verified `jarvis do` plans both); num_ctx sizing in every Ollama client (Jarvis, Friday, Alfred, Ultron; Vision's prompt is only the user's short description). Live A/B: an oversized prompt at default ctx kept 2050/9037 tokens and lost its instruction; sized ctx kept all and obeyed.
+3b. Done 2026-10-02 (found by the real Sunday 2026-09-28 run): both weekly tasks had failed with 0x800710E0 (schtasks defaults: no start on battery, no catch-up). `wall-e schedule install` now registers from XML (battery OK, StartWhenAvailable, 30 min limit); re-registered and verified Last Result 0. Scheduled report had also timed out collecting health: Friday `--health` lingered ~20s (thread-pool workers joined at exit; Ollama probe loaded the 7b model) -> daemon threads + /api/tags check (~5s); `jarvis health` checks agents in parallel. Report filename uses local date; health line lists real agent names. Scheduled report re-run: 6/6 healthy.
 4. Possible next: `jarvis do` drops invented optional *string* args but not booleans (planner added `dry_run: true` unasked; harmless direction, but worth a rule if it ever suppresses a wanted write).
 5. Blocked on user: see PROJECT_CONTEXT.md section 8 (cloud keys, admin installs, Phases 1/3, MCP registration, renaming 10x-ecosystem).
