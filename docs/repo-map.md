@@ -13,18 +13,18 @@ Every agent follows the contract: `agent.yaml`, a `--health` JSON command,
 and (except Wall-E) an MCP server. Jarvis's `jarvis/agents.yaml` wires them
 together. CI (pytest, Python 3.12) runs on every agent repo.
 
-## Agents (test counts as of 2026-09-23)
+## Agents (test counts as of 2026-11-03)
 
 | Agent | Role | Tests | Main commands |
 |---|---|---|---|
-| **Jarvis** | Orchestrator | 129 | `ask`, `do` (1-3 step cross-agent plans), `route`, `tools`, `daily`, `listen [--do]`, `health`; MCP server `python -m jarvis.mcp_server` |
+| **Jarvis** | Orchestrator | 135 | `ask`, `do` (1-3 step cross-agent plans), `route`, `tools`, `daily`, `listen [--do]`, `health`; MCP server `python -m jarvis.mcp_server` |
 | **Friday** (was jarvisOS) | Knowledge capture, socials | 483 | `note`, `youtube`, `article`, `ask`, `search`, `wiki`, `review`, `ideas`, `draft`, `calendar`, `github`, `portfolio`, `lifeos`, `habit`; branch `feat/knowledge-os-v2` mirrored to `main` |
 | **Alfred** (was LeetLearn) | Learning mentor | 581 py + 28 js | LeetCode hint ladder + AC gate, system-design mentor, `python -m alfred --explain` / `--quiz` (run from `apps/api`) |
 | **Ultron** (was yugen) | RE / security | 391 | `analyze` (Ghidra 11.4.3 + binwalk evidence graph), `ask`, `map/reach/diff`, `sandbox build|analyze` (no-network Docker), `vault approve` |
 | **TARS** | Code / build / git | 94 | `new`, `test`, `build`, `branch`, `commit`, `status`, `guard install|scan|uninstall` (pre-commit secret blocker); no push, by design |
 | **Vision** | Creative | 83 | `new --type ...`, `open`, `diagram`, `excalidraw`, `assets`, `list` |
-| **Wall-E** | Health / maintenance | 58 | `report`, `schedule [--job report|github]`, `focus on|off`, `cleanup` |
-| **10x** | Umbrella | 14 | `bootstrap/prereqs.py`, `bootstrap/bootstrap.py [--vault DIR --set-env] [--update]` |
+| **Wall-E** | Health / maintenance | 69 | `report`, `schedule [--job report|github]`, `focus on|off`, `cleanup` |
+| **10x** | Umbrella (incl. cross-agent contract tests) | 24 | `bootstrap/prereqs.py`, `bootstrap/bootstrap.py [--vault DIR --set-env] [--update]` |
 
 ## Shared vault
 
