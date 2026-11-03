@@ -24,6 +24,8 @@ Current command surface per agent: `docs/repo-map.md`. How to try everything: RE
 - Gate commits: `pytest && git commit`. The tars-guard hook now also runs on every commit in these repos.
 - Windows scheduled tasks: always create via `wall-e schedule install` (XML); plain `schtasks /Create` tasks won't run on battery.
 - Friday health reports catalogue drift (108 on disk vs 100 indexed on 2026-10-02); `friday doctor` self-heals it. That edits the user's vault index, so left to the user.
+- Clean-Linux CI check when Docker Desktop won't start: WSL `Ubuntu` (py3.12): clone the repo to /tmp, venv, `pip install -e . pytest`, run (script pattern: write a .sh to scratchpad, `wsl -d Ubuntu -- bash <wslpath>`). Never fake Windows with `os.name='nt'` in tests (pathlib breaks on Linux); use a `_windows()` seam.
+- After every push, check `gh run list` for ALL pushed repos (Wall-E was red for 3 commits on 2026-11-03 before this was caught).
 - Docker Desktop is often not running; Wall-E then reports the sandbox image as "unknown".
 
 ## Queue (after the user's hands-on phase)
