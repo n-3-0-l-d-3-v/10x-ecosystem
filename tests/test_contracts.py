@@ -86,6 +86,43 @@ def test_friday_draft_appears_in_friday_calendar(tmp_path):
     assert [p.platform for p in cc.load_posts(tmp_path)] == ["blog"]
 
 
+def test_jarvis_audit_log_is_audited_by_wall_e(tmp_path):
+    store = _mod("jarvis.store")
+    audit = _mod("walle.audit_review")
+    db = tmp_path / "jarvis.db"
+    log = store.AuditLog(db)
+    log.record("friday", "private", True, "allowed")      # violation: private data to a non-local agent
+    log.record("ultron", "private", True, "allowed")      # fine: Ultron is the trusted local agent
+    log.record("friday", "private", False, "refused")     # fine: refused
+    log.record("alfred", "work", True, "allowed")
+    log.close()
+    summary = audit.summarize_audit(audit.read_audit_entries(db_path=db))
+    assert [v["agent"] for v in summary["private_tier_violations"]] == ["friday"]
+    assert summary["per_tier_counts"] == {"private": 3, "work": 1}
+
+
+def test_jarvis_do_dispatches_reach_wall_e_audit(tmp_path, monkeypatch):
+    orchestrate = _mod("jarvis.orchestrate")
+    store = _mod("jarvis.store")
+    audit = _mod("walle.audit_review")
+    from types import SimpleNamespace as NS
+
+    async def fake_call(spec, tool, args, project=None):
+        return NS(text="ok", is_error=False)
+    monkeypatch.setattr(orchestrate, "call_tool", fake_call)
+
+    def step(agent, tier, allowed):
+        d = NS(allowed=allowed, conflict_reason=None if allowed else "blocked",
+               tier_decision=NS(tier=NS(value=tier), reason="floor"))
+        return orchestrate.Step(agent, "t", {}, d)
+    db = tmp_path / "jarvis.db"
+    orchestrate.execute_steps(orchestrate.Plan("x", [step("ultron", "private", True)], {"ultron": 1}), audit=store.AuditLog(db))
+    with pytest.raises(Exception):
+        orchestrate.execute_steps(orchestrate.Plan("y", [step("friday", "private", False)], {"friday": 1}), audit=store.AuditLog(db))
+    summary = audit.summarize_audit(audit.read_audit_entries(db_path=db))
+    assert summary["per_tier_counts"] == {"private": 2} and summary["private_tier_violations"] == []
+
+
 # --- shared constants --------------------------------------------------------
 
 def test_tars_guard_hook_is_recognised_by_wall_e(tmp_path, monkeypatch):
